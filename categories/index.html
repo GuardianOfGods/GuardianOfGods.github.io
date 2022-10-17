@@ -206,7 +206,7 @@ if ('Disqus' === 'Disqus' || !true) {
   }
 
   const getComment = () => {
-    fetch('https://disqus.com/api/3.0/forums/listPosts.json?forum=https-www-laputa-blog&related=thread&limit=6&api_key=t6RQHQHu0Ej38ekJ2Hzbq1AZ56hpwYJZd7BnppxSvsfy7rocN8fdM6PCZTLukw4m')
+    fetch('https://disqus.com/api/3.0/forums/listPosts.json?forum=https-www-laputa-blog&related=thread&limit=6&api_key=N6jfctB8356FoSW4TQUovl936SQR49THULpAic4h85bR8dDH2aBlGYidigScNaai')
       .then(response => response.json())
       .then(data => {
         const disqusArray = data.response.map(item => {
