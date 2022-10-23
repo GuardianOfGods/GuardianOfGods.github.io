@@ -5102,6 +5102,7 @@ mjx-container[display],
   -webkit-line-clamp: 4;
 }
 #article-container figure.gallery-group .gallery-group-name {
+  color: #add8e6;
   position: relative;
   margin: 0;
   padding: 8px 0;
@@ -5141,6 +5142,11 @@ mjx-container[display],
 }
 #article-container .fj-gallery .img-alt {
   display: none;
+}
+#article-container .gallery-rate {
+  font-size: 20px;
+  font-weight: bold;
+  color: #add8e6;
 }
 blockquote.pullquote {
   position: relative;
