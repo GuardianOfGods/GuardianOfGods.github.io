@@ -1,0 +1,649 @@
+<!DOCTYPE html><html lang="vi" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Bí kíp thất truyền về Transform trong Unity. | Chào mừng tới Laputa</title><meta name="keywords" content="Programming,Guide,Unity"><meta name="author" content="Laputa"><meta name="copyright" content="Laputa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Cẩm nang về transform trong Unity. Các thuộc tính, cách truy cập và tối ưu hóa.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bí kíp thất truyền về Transform trong Unity.">
+<meta property="og:url" content="https://guardianofgods.github.io/2022/10/26/unity-transform/index.html">
+<meta property="og:site_name" content="Chào mừng tới Laputa">
+<meta property="og:description" content="Cẩm nang về transform trong Unity. Các thuộc tính, cách truy cập và tối ưu hóa.">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:image" content="https://guardianofgods.github.io/img/post-cover/unity-transform.png">
+<meta property="article:published_time" content="2022-10-26T14:48:13.000Z">
+<meta property="article:modified_time" content="2022-10-26T15:57:14.676Z">
+<meta property="article:author" content="Laputa">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guardianofgods.github.io/img/post-cover/unity-transform.png"><link rel="shortcut icon" href="/img/header.png"><link rel="canonical" href="https://guardianofgods.github.io/2022/10/26/unity-transform/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Bí kíp thất truyền về Transform trong Unity.',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-26 22:57:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1734851905418363" crossorigin="anonymous"></script><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/css/tag.css"><style>#article-container.post-content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { -webkit-animation: avatar_turn_around 1s linear infinite; -moz-animation: avatar_turn_around 1s linear infinite; -o-animation: avatar_turn_around 1s linear infinite; -ms-animation: avatar_turn_around 1s linear infinite; animation: avatar_turn_around 1s linear infinite; }</style><link rel="stylesheet" href="/css/font-awesome-v6.0.0.css.css"><link rel="stylesheet" href="/css/op-content.css"><link rel="stylesheet" href="/css/universal.css"><link rel="stylesheet" href="/css/donate.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/lucky-wheel.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Trang chủ</span></a></div><div class="menus_item"><a class="site-page" href="/news"><i class="fa-fw fa-solid fa-newspaper"></i><span> Tin tức</span></a></div><div class="menus_item"><a class="site-page" href="/games"><i class="fa-fw fa fa-gamepad"></i><span> Trò chơi</span></a></div><div class="menus_item"><a class="site-page" href="/boardgames"><i class="fa-fw fa-solid fa-dice"></i><span> Boardgame</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Bài viết</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Thành tựu</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Thể loại</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> Giới thiệu</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/post-cover/unity-transform.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Chào mừng tới Laputa</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Trang chủ</span></a></div><div class="menus_item"><a class="site-page" href="/news"><i class="fa-fw fa-solid fa-newspaper"></i><span> Tin tức</span></a></div><div class="menus_item"><a class="site-page" href="/games"><i class="fa-fw fa fa-gamepad"></i><span> Trò chơi</span></a></div><div class="menus_item"><a class="site-page" href="/boardgames"><i class="fa-fw fa-solid fa-dice"></i><span> Boardgame</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Bài viết</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Thành tựu</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Thể loại</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> Giới thiệu</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Bí kíp thất truyền về Transform trong Unity.</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-10-26T14:48:13.000Z" title="Created 2022-10-26 21:48:13">2022-10-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-10-26T15:57:14.676Z" title="Updated 2022-10-26 22:57:14">2022-10-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Programming/">Programming</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Programming/Unity/">Unity</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Bí kíp thất truyền về Transform trong Unity."><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Doi-loi"><a href="#Doi-loi" class="headerlink" title="Đôi lời"></a>Đôi lời</h1><p>Mặc dù có thể rất nhiều bạn đã làm quen với transform nhưng mình cá rằng trong chúng ta chưa chắc đã biết hết các tính năng của nó. Bí kíp này thuộc về một nhà sư có tên là Yên Mộc và bị thất truyền từ nhiều năm trước đây. Rất mong các bạn ủng hộ.<br>Link gốc: <a target="_blank" rel="noopener" href="https://pancakellc.com/p/transform-trong-unity-l%C3%A0-g%C3%AC/">https://pancakellc.com/p/transform-trong-unity-l%C3%A0-g%C3%AC/</a></p>
+<h1 id="Gioi-thieu"><a href="#Gioi-thieu" class="headerlink" title="Giới thiệu"></a>Giới thiệu</h1><p>Transform là một chức năng cần thiết để phát triển chò trơi trong Unity. Nó chịu trách nhiệm cho các chức năng quan trọng<br>xuất hiện nhiều lần trong trò chơi như <strong>di chuyển</strong>, <strong>xoay</strong>, <strong>scale</strong> và <strong>nhóm</strong>.<br>Transform luôn được thao tác khi di chuyển đối tượng trong quá trình phát triển trò chơi.</p>
+<h2 id="Component-dac-biet-Transform"><a href="#Component-dac-biet-Transform" class="headerlink" title="Component đặc biệt Transform"></a>Component đặc biệt Transform</h2><p>Đầu tiên cần nói đến chính là Transform là một component. Một component là một chức năng trong Unity. Transform là một component<br>vì vậy bạn có thể coi nó như một chức năng tương tự như <strong>Camera</strong> hay <strong>Light</strong>.</p>
+<p>Các chức năng của transform là <strong>Position</strong>, <strong>Rotation</strong>, <strong>Scale</strong> và <strong>Group</strong></p>
+<p>Nó có 3 điểm đặc biệt sau:</p>
+<ul>
+<li>Luôn được gán cho GameObject</li>
+<li>Không thể bị xoá khỏi GameObject</li>
+<li>Không cần GetComponent để có thể truy cập Transform</li>
+</ul>
+<h3 id="Transform-luon-duoc-gan-cho-GameObject"><a href="#Transform-luon-duoc-gan-cho-GameObject" class="headerlink" title="Transform luôn được gán cho GameObject"></a>Transform luôn được gán cho GameObject</h3><p>Không có GameObject nào mà không có Transform</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-1.jpg" width="600"  alt=""/>
+</p>
+
+<p>Tất cả các GameObject đều có các chức năng cơ bản như di chuyển và xoay do Transform thực hiện</p>
+<h3 id="Khong-the-xoa-Transform"><a href="#Khong-the-xoa-Transform" class="headerlink" title="Không thể xóa Transform"></a>Không thể xóa Transform</h3><p>Như đã nói ở trên Transform luôn tồn tại trong GameObject vì vậy không có cách nào để loại bỏ Transform khỏi GameObject</p>
+<p>Như thấy trong hình dưới đây không hề có menu “Remove Component”</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-2.jpg" width="600"  alt=""/>
+</p>
+
+<p>Còn đối với các component bình thường ta có thể thấy menu “Remove Component” để xóa component khỏi GameObject</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-3.jpg" width="600"  alt=""/>
+</p>
+
+<p>Nếu bạn cố gắng xóa component Transform bằng code thông qua phương thức <strong>Destroy</strong></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RemoveTransfrom</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Destroy(transform);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Một lỗi như sau sẽ hiện thị ra màn hình console</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-4.jpg" width="600"  alt=""/>
+</p>
+
+<p>Nói cách khác không thể destroy component Transform</p>
+<h3 id="Khong-the-them-nhieu-hon-1-Transform"><a href="#Khong-the-them-nhieu-hon-1-Transform" class="headerlink" title="Không thể thêm nhiều hơn 1 Transform"></a>Không thể thêm nhiều hơn 1 Transform</h3><p>Không thể thêm Transform nhiều hơn 1 lần. hãy thêm bằng cách nhấn vào nút <strong>Add Component</strong></p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-5.jpg" width="600"  alt=""/>
+</p>
+
+
+<p>Như bạn có thể thấy ở trên Transform không tồn tại trong danh sách hiển thị ra. Vì nó là component không bao giờ được thêm vào<br>vì nó được gắn vào GameObject ngay từ đầu nên nó bị loại bỏ khỏi danh sách</p>
+<p>Hãy thử thêm bằng cách sử dụng đoạn code sau</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        gameObject.AddComponent&lt;Transform&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Một thông báo sẽ được hiển thị ra console khi đoạn code trên được thực thi nói cho bạn biết rằng không thể thêm component Transform vì nó đã tồn tại trước đó trong GameObject rồi</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-6.jpg" width="600"  alt=""/>
+</p>
+
+<h3 id="GetComponent-la-khong-bat-buoc-de-co-the-su-dung-Transform"><a href="#GetComponent-la-khong-bat-buoc-de-co-the-su-dung-Transform" class="headerlink" title="GetComponent là không bắt buộc để có thể sử dụng Transform"></a>GetComponent<Transform> là không bắt buộc để có thể sử dụng Transform</h3><p>Để lấy component chúng ta thường sử dụng GetComponent nhưng Transform là component đặc biệt và nó không cần phải sử dụng<br>GetComponent để có thể sử dụng được.<br>Hãy xem đoạn code sau:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GetTransform</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// sử dụng GetComponent</span></span><br><span class="line">        <span class="keyword">var</span> tr = gameObject.GetComponent&lt;Transform&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// thay vì sử dụng GetComponent ta có thể truy cập trực tiếp thông qua .transform</span></span><br><span class="line">        <span class="keyword">var</span> result = gameObject.transform;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h3><p>RectTransform là Transform nhưng sử dụng cho UI (user interface).</p>
+<p>Nó chịu trách nhiệm về các chức năng như position, rotation, scale, group trong canvas</p>
+<p>Bản thân RectTransform là kế thừa từ Transform nên nó có thể coi là Transform nhưng có thêm các chức năng bổ sung phục vụ cho UI</p>
+<h2 id="Cac-cach-co-ban-de-su-dung-Transfrom"><a href="#Cac-cach-co-ban-de-su-dung-Transfrom" class="headerlink" title="Các cách cơ bản để sử dụng Transfrom"></a>Các cách cơ bản để sử dụng Transfrom</h2><ol>
+<li>Thay đổi vị trí của Transform bằng <em><strong>position</strong></em> hoặc <em><strong>localPosition</strong></em></li>
+<li>Thay đổi góc xoay của Transform bằng <em><strong>eulerAngles</strong></em></li>
+<li>Thay đổi tỉ lệ của Transform bằng <em><strong>localScale</strong></em></li>
+<li>Gom nhóm Transform bằng <em><strong>SetParent</strong></em></li>
+</ol>
+<h3 id="Thay-doi-vi-tri-cua-Transform-bang-localPosition-x2F-position"><a href="#Thay-doi-vi-tri-cua-Transform-bang-localPosition-x2F-position" class="headerlink" title="Thay đổi vị trí của Transform bằng localPosition &#x2F; position"></a>Thay đổi vị trí của Transform bằng localPosition &#x2F; position</h3><p>Trong quá trình phát triển trò chơi, bạn có thể muốn thay đổi vị trí của nhân vật của mình.<br>Thay đổi vị trí là nhiệm vụ của Transform. Bạn có thể thực hiện bằng cách thay đổi giá trị của thuộc tính <strong>position</strong> trong inspector</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-7.jpg" width="600"  alt=""/>
+</p>
+
+<p>Bạn có thể thay đổi các tọa độ x, y, z</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-8.gif" width="600"  alt=""/>
+</p>
+
+<p>Sử dụng position hoặc localPosition trong code như thế nào? hãy xem ví dụ di chuyển tọa độ x của Transform từ -2 thành 2 sau 1 giây</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UpdatePosition</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.localPosition = <span class="keyword">new</span> Vector3(<span class="number">-2f</span>, <span class="number">-3f</span>, <span class="number">0f</span>);</span><br><span class="line">        <span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">1</span></span>)</span>;</span><br><span class="line">        transform.localPosition = <span class="keyword">new</span> Vector3(<span class="number">2f</span>, <span class="number">-3f</span>, <span class="number">0f</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transfrom-9.gif" width="600"  alt=""/>
+</p>
+
+<p>Bạn có thể thấy rằng tọa độ X đã thay đổi sau 1 s</p>
+<h4 id="Su-khac-biet-giua-position-va-localPosion-la-gi"><a href="#Su-khac-biet-giua-position-va-localPosion-la-gi" class="headerlink" title="Sự khác biệt giữa position và localPosion là gì?"></a>Sự khác biệt giữa position và localPosion là gì?</h4><p>Chúng trông có vẻ giống nhau nhưng thật ra hoàn toàn khác nhau. Bạn cần hiểu chính xác điểm khác biệt giữa chúng để vận dụng trong thực tế</p>
+<p>Đầu tiên bạn có thể hiểu là</p>
+<ul>
+<li>position : là tọa độ tuyệt đối</li>
+<li>localPosition : là tọa độ tương đối</li>
+</ul>
+<h5 id="Toa-do-tuyet-doi-“position”-la-gi"><a href="#Toa-do-tuyet-doi-“position”-la-gi" class="headerlink" title="Tọa độ tuyệt đối “position” là gì?"></a>Tọa độ tuyệt đối “position” là gì?</h5><p>trong unity tọa độ biểu diễn dưới dạng xyz có trục x, trục y, trục z và gốc tọa độ.<br>Gốc tọa độ là điểm có tọa độ xyz (0, 0, 0)</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.26/img/transform-10.jpg" width="600"  alt=""/>
+</p>
+
+<p>Tọa độ tuyệt đối là tọa độ dựa trên gốc tọa độ, trong hình dưới đây nhân vật của bạn được đặt ở vị trí cách gốc tọa độ 2 đơn vị trên trục x</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-11.jpg" width="600"  alt=""/>
+</p>
+
+<p>Ví dụ nhân vật ở tọa độ (1, 0, 2)</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-12.jpg" width="600"  alt=""/>
+</p>
+
+<p>Tọa độ tuyệt đối còn được gọi là “<em>global position</em>“</p>
+<h5 id="Toa-do-tuong-doi-“localPosition”-la-gi"><a href="#Toa-do-tuong-doi-“localPosition”-la-gi" class="headerlink" title="Tọa độ tương đối “localPosition” là gì?"></a>Tọa độ tương đối “localPosition” là gì?</h5><p>Tọa độ tương đối là tọa độ liên quan đến hệ thống phân cấp</p>
+<p>Hệ thống phân cấp thể hiện như hình minh họa sau đây</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/gameobject-hierarchy.png" width="600"  alt=""/>
+</p>
+
+<p>Để giải thích localPosition chúng ta sẽ sử dụng mối quan hệ parent-child đơn giản sau đây làm ví dụ</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-13.jpg" width="600"  alt=""/>
+</p>
+
+<p>Đầu tiên hãy đặt vị trí parent trong hierarchy ở tọa độ (0, 1, 0)</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-14.jpg" width="600"  alt=""/>
+</p>
+
+
+<p>Bây giờ chúng ta hãy di chuyển vị trí trục x của child đến vị trí (2, 0, 0)</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-15.jpg" width="600"  alt=""/>
+</p>
+
+<p>Vị trí tương đối là vị trí so với tọa độ của parent, như ví dụ trên thì</p>
+<ul>
+<li>localPosition của nhân vật sẽ là (2, 0, 0)</li>
+<li>position của nhân vật sẽ là (2, 0, 0) + (0, 1, 0) &#x3D; (2, 1, 0)</li>
+</ul>
+<h5 id="Phan-biet-position-va-localPosition"><a href="#Phan-biet-position-va-localPosition" class="headerlink" title="Phân biệt position và localPosition"></a>Phân biệt position và localPosition</h5><p>Như đã giải thích về tọa độ tương đối và tọa độ tuyệt đối, nhưng làm thế nào để sử dụng chúng đúng cách.</p>
+<p>Với hầu hết các nhu cầu bình thường chỉ sử dụng <strong>localPosition</strong> là đủ.<br>Nếu transform hierarchy rất sâu (transform lồng nhau rất nhiều cấp) và bạn muốn di chuyển child hierarchy sang tọa độ tuyệt đối (global position)<br>hãy sử dụng <strong>position</strong></p>
+<p>Chú ý răng việc sử dụng positon và localPosition cùng nhau trong trường hợp không cần thiết sẽ gây nhầm lẫn và khó hiểu.<br>Vì vậy nên sử dụng localPosition cho hầu hết các thao tác thay đổi vị trí.</p>
+<h5 id="Don-vi-trong-Unity-la-met"><a href="#Don-vi-trong-Unity-la-met" class="headerlink" title="Đơn vị trong Unity là mét"></a>Đơn vị trong Unity là mét</h5><p>Như tiêu đề đơn vị sử dụng trong Unity là mét</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-16.jpg" width="600"  alt=""/>
+</p>
+
+<p>Nếu bạn đặt tọa độ là (3, 0, 0) nhân vật sẽ có khoảng cách với gốc tọa độ là 3m trên trục X.</p>
+<p>Sử dụng đồng nhất đơn vị là điều quan trọng. Các model tạo bằng các phần mềm 3D có thể thêm vào unity và đơn vị của phần mềm 3D không phải lúc nào cũng là mét.<br>hãy kiểm tra và chắc chắn nó được chuyển đổi thành mét để mọi tính toán của bạn sau này được đồng nhất và chính xác.</p>
+<h5 id="Vector3-la-gi"><a href="#Vector3-la-gi" class="headerlink" title="Vector3 là gì?"></a>Vector3 là gì?</h5><p>Vector3 là dữ liệu chứa 3 số bạn có thể truy cập nó với 3 thuộc tính x, y, z.<br>Bạn có thể sử dụng nó để biểu diễn véc tơ trong không gian 3 chiều, điểm, tọa độ</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Vector3 vector3 = <span class="keyword">new</span> Vector3(<span class="number">2.5f</span>, <span class="number">1.0f</span>, <span class="number">19.96f</span>);</span><br><span class="line">Debug.Log(<span class="string">&quot;x:&quot;</span> + vector3.x);</span><br><span class="line">Debug.Log(<span class="string">&quot;y:&quot;</span> + vector3.y);</span><br><span class="line">Debug.Log(<span class="string">&quot;z:&quot;</span> + vector3.z);</span><br></pre></td></tr></table></figure>
+
+<p>Vector3 cũng có sẵn các chức năng hữu ích như các phép toán số học, hay tính khoảng cách giữa hai điểm.<br>Lưu ý rằng Vector3 chứa các số thập phân, nếu bạn chỉ muốn xử lý số nguyên bạn có thể sử dụng <strong><em>Vector3Int</em></strong></p>
+<h5 id="Di-chuyen-vi-tri-bang-phuong-thuc-Translate"><a href="#Di-chuyen-vi-tri-bang-phuong-thuc-Translate" class="headerlink" title="Di chuyển vị trí bằng phương thức Translate"></a>Di chuyển vị trí bằng phương thức Translate</h5><p>Phương thức Translate cũng có thể thay đổi vị trí của Transform, tham số truyền vào là khoảng cách cần di chuyển đến.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TranslateSelf</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.Translate(<span class="keyword">new</span> Vector3(<span class="number">1f</span>, <span class="number">0.5f</span>, <span class="number">0f</span>));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// dòng code trên sẽ tương đương với điều sau đây</span></span><br><span class="line">        transform.localPosition += <span class="keyword">new</span> Vector3(<span class="number">1f</span>, <span class="number">0.5f</span>, <span class="number">0f</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Đoạn code trên sẽ cộng thêm (1f, 0.5f, 0f) vào tọa độ tương đối.</p>
+<p>Nếu bạn muốn Translate bằng tọa độ tuyệt đối (global position) bạn có thể chỉ định đối số thứ 2 của phương thức Translate là Space.World</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TranslateWorld</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.Translate(<span class="keyword">new</span> Vector3(<span class="number">1f</span>, <span class="number">0.5f</span>, <span class="number">0f</span>), Space.World);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// dòng code trên sẽ tương đương với điều sau đây</span></span><br><span class="line">        transform.position += <span class="keyword">new</span> Vector3(<span class="number">1f</span>, <span class="number">0.5f</span>, <span class="number">0f</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Thay-doi-goc-xoay-bang-eulerAngles"><a href="#Thay-doi-goc-xoay-bang-eulerAngles" class="headerlink" title="Thay đổi góc xoay bằng eulerAngles"></a>Thay đổi góc xoay bằng eulerAngles</h3><p>Bạn có thể nhìn thấy thuộc tính <strong>Rotation</strong> trong cửa sổ Inspector</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-17.jpg" width="600"  alt=""/>
+</p>
+
+<p>Bạn có thể xoay theo trục x, y, hoặc z</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-18.gif" width="600"  alt=""/>
+</p>
+
+<h4 id="Thay-doi-goc-voi-localEulerAngles-x2F-eulerAngles"><a href="#Thay-doi-goc-voi-localEulerAngles-x2F-eulerAngles" class="headerlink" title="Thay đổi góc với localEulerAngles &#x2F; eulerAngles"></a>Thay đổi góc với localEulerAngles &#x2F; eulerAngles</h4><p>Cũng tương tự như localPosition &#x2F; position các phép quay cũng có phép quay dựa trên gốc và phép quay dựa theo parent</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RotateDemo</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.localEulerAngles = <span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="comment">// đợi 1 giây</span></span><br><span class="line">        <span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">1f</span></span>)</span>;</span><br><span class="line">        <span class="comment">// xoay một góc 45 độ theo trục z  </span></span><br><span class="line">        transform.localEulerAngles = <span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">45</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Chạy thử đoạn mã trên bạn sẽ thấy nhân vật xoay một góc 45 độ theo trục z</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-19.gif" width="600"  alt=""/>
+</p>
+
+<p>localEulerAngles và eulerAngles xoay transform bằng cách thay đổi các giá trị vector3</p>
+<h4 id="Thay-doi-goc-voi-localRotation-x2F-rotation"><a href="#Thay-doi-goc-voi-localRotation-x2F-rotation" class="headerlink" title="Thay đổi góc với localRotation &#x2F; rotation"></a>Thay đổi góc với localRotation &#x2F; rotation</h4><p>Ngoài eulerAngle bạn có thể sử dụng rotation để thay đổi góc, rotation sẽ sử dụng Quaternion thay vì Vector3.</p>
+<p>Quaternion được sử dụng để biểu diễn các phép quay.</p>
+<p>Theo dõi đoạn code sau:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RotateDemo2</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.rotation = Quaternion.identity; <span class="comment">// chỉ định rằng đối tượng không xoay</span></span><br><span class="line">        <span class="comment">// đợi 1 giây</span></span><br><span class="line">        <span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">1f</span></span>)</span>;</span><br><span class="line">        <span class="comment">// xoay một góc 30 độ quanh trục z  </span></span><br><span class="line">        transform.rotation = Quaternion.Euler(<span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">30</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Để hiểu được quaternion, bạn cần có một số kiến thức toán học nhất định chúng ta sẽ tìm hiểu về nó chi tiết trong một bài viết cụ thể hơn.</p>
+<h3 id="Thay-doi-ti-le-bang-localScale"><a href="#Thay-doi-ti-le-bang-localScale" class="headerlink" title="Thay đổi tỉ lệ bằng localScale"></a>Thay đổi tỉ lệ bằng localScale</h3><p>Bạn có thể nhìn thấy thuộc tính <strong>Scale</strong> trong cửa sổ Inspector</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-20.jpg" width="600"  alt=""/>
+</p>
+
+<p>Bạn có thể thay đổi tỉ lệ theo trục x, y, hoặc z</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-21.gif" width="600"  alt=""/>
+</p>
+
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-22.jpg" width="600"  alt=""/>
+</p>
+
+<p>“Enable constrained proportions”: sẽ khiến cho thay đổi x, y, z biến đổi theo cùng tỉ lệ</p>
+<p>Ví dụ:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ScaleDemo</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.localScale = Vector3.one;</span><br><span class="line">        <span class="comment">// đợi 1 giây</span></span><br><span class="line">        <span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">1f</span></span>)</span>;</span><br><span class="line">        <span class="comment">// tăng gấp đôi kích thước cho đối tượng</span></span><br><span class="line">        transform.localScale = <span class="keyword">new</span> Vector3(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Khác với position và rotation scale chỉ có một loại localScale mà thôi</p>
+<h4 id="Su-dung-setParrent-de-thay-doi-he-thong-phan-cap"><a href="#Su-dung-setParrent-de-thay-doi-he-thong-phan-cap" class="headerlink" title="Sử dụng setParrent để thay đổi hệ thống phân cấp"></a>Sử dụng setParrent để thay đổi hệ thống phân cấp</h4><p>Cùng với position, rotation và scale một tính năng quan trọng khác của Transform là gom nhóm</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-23.jpg" width="600"  alt=""/>
+</p>
+
+<p>Bạn có thể nhóm các đối tượng bằng cách kéo thả GameObject trong inspector</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-24.gif" width="600"  alt=""/>
+</p>
+
+<p>Ngoài ra bạn có thể sử dụng phương thức <strong>SetParent</strong></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SetParentSample</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">SerializeField</span>] <span class="keyword">private</span> Transform _parent;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.SetParent(_parent, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Giờ thì gameObject sẽ là con của “_parent” sau khi hàm Start được thực thi.</p>
+<p>Hãy chú ý đến tham số thứ 2 của phương thức SetParent nó rất quan trọng, giá trị mặc định là <strong>true</strong> nếu bạn không chỉ định.</p>
+<ul>
+<li>true : positon, rotation, scale được thay đổi để đối tượng giữ nguyên vị trí ở global position như trước</li>
+<li>false :</li>
+</ul>
+<p>Để làm rõ hành vi của nó chúng ta xem xét ví dụ sau đây</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-25.jpg" width="600"  alt=""/>
+</p>
+ban đầu cả 3 đối tượng không ràng buộc với nhau không phải là cha con
+
+<p>thay đổi gameObject C thành con của A với tham số thứ 2 là true</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-26.jpg" width="600"  alt=""/>
+</p>
+
+<p>Như bạn thấy vị trí của C được thay đổi thành (3.5, 1.5, 0) để global position của nó được giữ nguyên như ban đầu</p>
+<p>thay đổi gameObject C thành con của A với tham số thứ 2 là false</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-27.jpg" width="600"  alt=""/>
+</p>
+
+<p>localPosition của C lúc này bằng với position lúc trước của nó, lúc này C sẽ kế thừa tọa độ (6.5, -1.5, 0) của A</p>
+<p>nói cách khác C được đặt tại vị trí (10, 0, 0) so với (6.5, -1.5, 0)</p>
+<p>Đối số thứ 2 của SetParent thường được chỉ định là false, true hiếm khi được sử dụng</p>
+<p>Nếu bạn truyền null vào SetParent. Điều này đồng nghĩa với việc loại bỏ parent của gameObject lúc này nó sẽ trở thành một đối tượng ngoài cùng trong hierarchy</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">child.transform.SetParent(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-28.gif" width="600"  alt=""/>
+</p>
+
+<p>Bạn có thể tham khảo thêm tài liệu của Unity về SetParent <a target="_blank" rel="noopener" href="https://docs.unity3d.com/ScriptReference/Transform.SetParent.html">ở đây</a></p>
+<h3 id="Truy-cap-doi-tuong-parent"><a href="#Truy-cap-doi-tuong-parent" class="headerlink" title="Truy cập đối tượng parent"></a>Truy cập đối tượng parent</h3><p>Bạn có thể truy cập đối tượng cha gần nhất của transform dựa vào thuộc tính parent</p>
+<p>Giả sử ta có hệ thống hierarchy như sau</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-29.jpg" width="600"  alt=""/>
+</p>
+
+<p>Đoạn code sau đây được gắn vào gameObject Child</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ParentDemo</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> p = transform.parent;</span><br><span class="line">        Debug.Log(p.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Kết quả hiện thị ra màn hình console sẽ là “ParentB”</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-30.jpg" width="600"  alt=""/>
+</p>
+
+<h4 id="Parent-tra-ve-null"><a href="#Parent-tra-ve-null" class="headerlink" title="Parent trả về null"></a>Parent trả về null</h4><p>Nếu đối tượng của bạn đang ở gốc của hierarchy thuộc tính parent sẽ trả về kết quả null</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-31.jpg" width="600"  alt=""/>
+</p>
+
+<p>vì vậy bạn nên kiểm tra kết quả với null trước khi sử dụng</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CheckNullParent</span> : <span class="title">MonoBehaviour</span>  </span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Awake</span>()</span>  </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> parent = transform.parent;  </span><br><span class="line">        <span class="keyword">if</span> (parent != <span class="literal">null</span>) &#123;  </span><br><span class="line">            <span class="comment">// to_do</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Truy-cap-root"><a href="#Truy-cap-root" class="headerlink" title="Truy cập root"></a>Truy cập root</h4><p>Đôi khi bạn muốn truy cập đối tượng root từ rất sâu trong hệ thống hierarchy. Trong trường hợp đó bạn có thể sử dụng thuộc tính root</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.22/img/transform-32.jpg" width="600"  alt=""/>
+</p>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TransformRoot</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> p = transform.root;</span><br><span class="line">        Debug.Log(p.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Kết quả hiện thị ra màn hình console sẽ là “Root”.</p>
+<h2 id="Phu-luc"><a href="#Phu-luc" class="headerlink" title="Phụ lục"></a>Phụ lục</h2><h3 id="Phuong-thuc-LookAt"><a href="#Phuong-thuc-LookAt" class="headerlink" title="Phương thức LookAt"></a>Phương thức LookAt</h3><p>Trong quá trình phát triển trò chơi, bạn cần làm cho đối tượng của mình đối mặt với một hướng cụ thể.<br>Ví dụ, trường hợp kẻ thù bắn đạn vào bạn. Kẻ thù sẽ đối mặt với bạn và bắn. Thoạt nghe có vẻ khó nhưng thực hiện rất dễ</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LookAtTargetSample</span> : <span class="title">MonoBehaviour</span>  </span><br><span class="line">&#123; </span><br><span class="line">    [<span class="meta">SerializeField</span>] Transform _target;  </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span>  </span><br><span class="line">    &#123;</span><br><span class="line">        transform.LookAt(_target);  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.26/img/transform33.gif" width="600"  alt=""/>
+</p>
+
+<p>Bạn cũng có thể truyền vector3 làm đối số cho phương thức LookAt</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform.LookAt(<span class="keyword">new</span> Vector3(<span class="number">5</span>, <span class="number">0</span>, <span class="number">-5</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Transform-animation"><a href="#Transform-animation" class="headerlink" title="Transform animation"></a>Transform animation</h3><p>Animation của Transform thường được sử dụng trong suốt quá trình phát triển trò chơi của bạn.<br>Dưới đây chúng ta cùng tìm hiểu một số cách thể thực hiện transform animation.</p>
+<h4 id="Su-dung-Update"><a href="#Su-dung-Update" class="headerlink" title="Sử dụng Update"></a>Sử dụng Update</h4><p>Hãy xem xét đoạn code mô tả chuyển động đều (vận tốc không đổi) sau.<br>Nhân vật sẽ di chuyển từ trái sang phải sau đó di chuyển ngược lại</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TransformAnimationSample</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">float</span> _dir = <span class="number">1f</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="built_in">float</span> RANGE_X = <span class="number">1.5f</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="built_in">float</span> SPEED = <span class="number">2f</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> pos = transform.localPosition;</span><br><span class="line">        <span class="keyword">if</span> (pos.x &lt; -RANGE_X)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// Đổi hướng di chuyển</span></span><br><span class="line">            _dir *= <span class="number">-1f</span>;</span><br><span class="line">            pos.x = -RANGE_X;</span><br><span class="line">            <span class="comment">// Đổi hướng hiển thị</span></span><br><span class="line">            transform.localScale = <span class="keyword">new</span> Vector3(transform.localScale.x  * <span class="number">-1f</span>, transform.localScale.y, transform.localScale.z);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (pos.x &gt; RANGE_X)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// Đổi hướng di chuyển</span></span><br><span class="line">            _dir *= <span class="number">-1f</span>;</span><br><span class="line">            pos.x = RANGE_X;</span><br><span class="line">            <span class="comment">// Đổi hướng hiển thị</span></span><br><span class="line">            transform.localScale = <span class="keyword">new</span> Vector3(transform.localScale.x * <span class="number">-1f</span>, transform.localScale.y, transform.localScale.z);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Tính toán tọa độ di chuyển</span></span><br><span class="line">        pos.x += SPEED * Time.deltaTime * _dir;</span><br><span class="line">        <span class="comment">// Cập nhật vị trí cho đối tượng</span></span><br><span class="line">        transform.localPosition = pos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Kết quả là bạn có được một chuyển động như dưới đây:</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-34.gif" width="600"  alt=""/>
+</p>
+
+<h4 id="Su-dung-AnimationClip"><a href="#Su-dung-AnimationClip" class="headerlink" title="Sử dụng AnimationClip"></a>Sử dụng AnimationClip</h4><p>Bạn cũng có thể tạo animation một cách trực quan bằng công cụ Animation có sẵn của Unity</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-35.gif" width="600"  alt=""/>
+</p>
+
+<h4 id="Su-dung-Tween"><a href="#Su-dung-Tween" class="headerlink" title="Sử dụng Tween"></a>Sử dụng Tween</h4><p>Ngoài ra bạn cũng có thể sử dụng Tween (ví dụ ở đây sử dụng DOTween nó là một plugin của bên thứ 3).<br>Giúp bạn tạo animation chỉ với một vài dòng code.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> DG.Tweening;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DotweenSample</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="built_in">float</span> RANGE_X = <span class="number">1.5f</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="built_in">float</span> SPEED = <span class="number">2f</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.DOLocalMoveX(RANGE_X, SPEED)</span><br><span class="line">            .SetEase(Ease.Linear)</span><br><span class="line">            .SetLoops(<span class="number">-1</span>, LoopType.Yoyo)</span><br><span class="line">            .SetSpeedBased(<span class="literal">true</span>)</span><br><span class="line">            .OnStepComplete(() =&gt; &#123; transform.localScale = <span class="keyword">new</span> Vector3(transform.localScale.x * <span class="number">-1f</span>, transform.localScale.y, transform.localScale.z); &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Và đây là kết quả</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-36.gif" width="600"  alt=""/>
+</p>
+
+
+<p>Bạn có thể thấy đoạn code sử dụng Dotween ngắn hơn và dễ hiểu hơn nhiều so với đoạn code viết trong hàm Update</p>
+<p>Để biết thêm về những gì DOTween có thể làm được bạn có thể xem tài liệu trên trang chủ của <a target="_blank" rel="noopener" href="http://dotween.demigiant.com/documentation.php">DOTween</a></p>
+<h3 id="Xoay-quanh-truc-hoac-toa-do-duoc-chi-dinh"><a href="#Xoay-quanh-truc-hoac-toa-do-duoc-chi-dinh" class="headerlink" title="Xoay quanh trục hoặc tọa độ được chỉ định"></a>Xoay quanh trục hoặc tọa độ được chỉ định</h3><p>Đôi khi bạn muốn xoay đối tượng xung quanh các trục tọa độ, trong trường hợp này bạn có thể sử dụng <strong>RotateAround</strong></p>
+<p>Sau đây chúng ta sẽ thử xoay nhân vật xung quanh trục z</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-37.gif" width="600"  alt=""/>
+</p>
+
+<p>Gắn đoạn code sau vào nhân vật</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RotateAroundSample</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// tọa độ tâm</span></span><br><span class="line">        <span class="keyword">var</span> center = <span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);  </span><br><span class="line">        <span class="comment">// trục quay (trục y)</span></span><br><span class="line">        <span class="keyword">var</span> axis = <span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);  </span><br><span class="line">        <span class="comment">// góc xoay mỗi frame</span></span><br><span class="line">        <span class="keyword">var</span> angle = <span class="number">0.2f</span>;  </span><br><span class="line">        transform.RotateAround(center, axis, angle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Sau khi chạy bạn sẽ có chuyển động giống như thế này:</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-37.gif" width="600"  alt=""/>
+</p>
+
+<h3 id="Truy-cap-vao-cac-doi-tuong-con"><a href="#Truy-cap-vao-cac-doi-tuong-con" class="headerlink" title="Truy cập vào các đối tượng con"></a>Truy cập vào các đối tượng con</h3><h4 id="Foreach"><a href="#Foreach" class="headerlink" title="Foreach"></a>Foreach</h4><p>Giả sử bạn có hệ thống hierarchy giống như sau:</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-39.jpg" width="600"  alt=""/>
+</p>
+
+<p>Nếu bạn muốn duyệt toàn bộ các đối tượng con cấp 1 của root bạn có thể sử dụng foreach</p>
+<p>Như thế này:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChildLevel1</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (Transform t <span class="keyword">in</span> transform)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(t.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Dưới đây là kết quả in ra console</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-40.jpg" width="600"  alt=""/>
+</p>
+
+<p>Thoạt nhìn transform không phải một array hay list nên tại sao nó có thể sử dụng được với foreach?</p>
+<p>Vì transform kế thừa interface IEnumerable nên nó có thể duyệt được bằng foreach.</p>
+<h4 id="GetChild"><a href="#GetChild" class="headerlink" title="GetChild"></a>GetChild</h4><p>Ngoài cách này bạn có thể sử dụng phương thức GetChild tham số truyền vào là index của đối tượng con mà bạn muốn lấy.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GetChildSample</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; transform.childCount - <span class="number">1</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> child = transform.GetChild(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-41.jpg" width="600"  alt=""/>
+</p>
+
+<p>Lưu ý rằng ví dụ trên Root có 4 đối tượng con nên đối tượng con cuối cùng sẽ có index là 3 (tương ứng với childCount - 1) nếu bạn cố gắng lấy các đối tượng có index lớn hơn 3 một<br>ngoại lệ sẽ được ném ra</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GetChildSampleException</span> : <span class="title">MonoBehaviour</span></span><br><span class="line"> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> child = transform.GetChild(<span class="number">4</span>); <span class="comment">// một ngoại lệ sẽ được ném ra console</span></span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-42.jpg" width="600"  alt=""/>
+</p>
+
+<h4 id="Lay-toan-bo-cac-doi-tuong-con"><a href="#Lay-toan-bo-cac-doi-tuong-con" class="headerlink" title="Lấy toàn bộ các đối tượng con"></a>Lấy toàn bộ các đối tượng con</h4><p>Bằng cách sử dụng <strong>GetComponentsInChildren</strong> bạn có thể lấy được tất cả cấu trúc hierarchy bao gồm cả bản thân nó (self)</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GetAllChildSample</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> children = GetComponentsInChildren&lt;Transform&gt;();</span><br><span class="line">        <span class="keyword">foreach</span> (Transform t <span class="keyword">in</span> children)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(t.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Ví dụ áp dụng với cấu trúc hierarchy sau</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-43.jpg" width="600"  alt=""/>
+</p>
+
+<p>Kết quả hiển thị ra console:</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-44.jpg" width="600"  alt=""/>
+</p>
+
+<p>Nếu bạn chỉ muốn nhận các đối tượng con mà loại bỏ chính bản thân mình hãy làm như sau</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GetAllChildSampleIgnoreSelf</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> children = GetComponentsInChildren&lt;Transform&gt;();</span><br><span class="line">        <span class="keyword">foreach</span> (Transform t <span class="keyword">in</span> children)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(t != transform) Debug.Log(t.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="IsChildOf"><a href="#IsChildOf" class="headerlink" title="IsChildOf"></a>IsChildOf</h3><p>Kiểm tra xem đối tượng Transform đã cho có phải là parent hay không?</p>
+<p>Lúc này bạn có thể sử dụng <strong>IsChildOf</strong> cú pháp khá đơn giản như sau</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">IsChildOfSample</span> : <span class="title">MonoBehaviour</span>  </span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">SerializeField</span>] Transform _checkTransform;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span>  </span><br><span class="line">    &#123;</span><br><span class="line">        transform.IsChildOf(_checkTransform);  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-45.jpg" width="600"  alt=""/>
+</p>
+
+<p>Lưu ý rằng IsChildOf vẫn trả về true khi kiểm tra với chính bản thân nó</p>
+<h3 id="LossyScale"><a href="#LossyScale" class="headerlink" title="LossyScale"></a>LossyScale</h3><p>Đôi khi bạn muốn lấy scale chính xác của một đối tượng nằm sâu bên trong hierarchy</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-46.jpg" width="600"  alt=""/>
+</p>
+
+<p>Như bạn thấy localScale của cả 2 Hina đều là 1 nhưng kích thước thật sự của chúng khác nhau.<br>Bạn có thể dễ dàng lấy tỉ lệ chính xác bằng cách sử dụng lossyScale</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LossyScaleSample</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(transform.lossyScale);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><p>Transform được sử dụng xuyên suốt quá trình phát triển trò chơi và có mặt ở khắp nơi trong code của bạn.<br>vì vậy một thay đổi nhỏ về cách sử dụng transform cũng sẽ ảnh hưởng đến hiệu suất tổng thể của cả trò chơi</p>
+<h4 id="Cache-transform"><a href="#Cache-transform" class="headerlink" title="Cache transform"></a>Cache transform</h4><p>Cách mà bạn vẫn thường sử dụng để truy cập thuộc tính transform thường là <strong><em>gameObject.transform</em></strong> hoặc <strong><em>transform</em></strong>.<br>Nhìn thì có vẻ chúng ta đang truy cập trực tiếp nó giống như bạn gọi tới <strong>GetComponent<Transform></strong></p>
+<p>Vì vậy bạn luôn GetComponent mỗi lần bạn truy cập vào transform, sẽ không có vấn đề gì nếu tần suất truy cập thấp.<br>Tuy nhiên đôi khi bạn sẽ quên mất nó và sử dụng bên trong Update nơi mọi thứ cập liên tục mỗi frame.<br>Lúc này CPU của bạn luôn phải GetComponent để biết được đối tượng transform mặc dù hai đứa đã làm quen với nhau từ frame trước đó.</p>
+<p>trong trường hợp này lưu vào bộ nhớ cache là một giải pháp tuyệt vời</p>
+<p>Ví dụ khi không sử dụng bộ nhớ đệm mã của bạn trông giống như thế này</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCacheTransform</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.position += Vector3.right * (Time.deltaTime * <span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Khi sử dụng bộ nhớ đệm</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CacheTransform</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Transform _cacheTransform;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        _cacheTransform = transform;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        _cacheTransform.position += Vector3.right * (Time.deltaTime * <span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Sau khi transform được vào cache ở hàm Start, khi bạn truy cập biến _cacheTransform bạn sẽ có nó ngay lập tức mà không cần tốn bất kỳ chi phí phát sinh thêm nào.</p>
+<p>Thực tế là transform và gameObject.transform không sử dụng GetComponent<Transform>.<br>Bên dưới Unity họ đã tạo ra một chức năng riêng được tối ưu hóa cho việc lấy Transform nó sẽ nhanh hơn việc sử dụng GetComponent.<br>Tất nhiên bạn vẫn có thể sử dụng GetComponent<Transform> trong các trường hợp bất khả kháng khác.</p>
+<p>Tuy nhiên cho dù nó được tối ưu cỡ nào đi nữa nó vẫn chậm hơn so với việc truy cập từ bộ nhớ đệm.</p>
+<p>Tóm lại cách tốt nhất để truy cập transform đó là lưu nó vào bộ nhớ đệm sau đó truy cập nó từ bộ nhớ đệm.</p>
+<h4 id="Thay-vi-tri-va-goc-xoay-cung-luc"><a href="#Thay-vi-tri-va-goc-xoay-cung-luc" class="headerlink" title="Thay vị trí và góc xoay cùng lúc"></a>Thay vị trí và góc xoay cùng lúc</h4><p>Trong trường hợp bạn thay đổi position và rotation cùng một lúc, bạn có thể sử dụng <strong>SetPositionAndRotation</strong><br>thay vì viết riêng và cập nhật riêng biệt từng thuộc tính nó sẽ mang lại hiệu suất tốt hơn</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SetPositionAndRotation</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.SetPositionAndRotation (<span class="keyword">new</span> Vector3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>), Quaternion.Euler(<span class="number">0</span>, <span class="number">45</span>, <span class="number">0</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Performance-cho-hierarchy"><a href="#Performance-cho-hierarchy" class="headerlink" title="Performance cho hierarchy"></a>Performance cho hierarchy</h4><p>Nếu độ sâu của hierarchy cố định, bạn có thể chỉ định độ tối đa thông qua <strong>hierarchyCapacity</strong> để có thể mong đợi cải thiện hiệu suất</p>
+<p>Ví dụ bạn chỉ định độ sâu tối đa là 10</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HierarchyCapacitySample</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        transform.hierarchyCapacity = <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Nếu vượt quá 10 sẽ xuất hiện cảnh báo và trò chơi vẫn chạy</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-47.jpg" width="600"  alt=""/>
+</p>
+
+<p>Theo như Unity nói nó có thể giảm mức sử dụng bộ nhớ và cải thiện hiệu suất của <strong>Transform.SetParent</strong> và <strong>Object.Destroy</strong><br>Nhưng với độ sâu 10 hay 20 chúng không có gì khác nhau</p>
+<p>Bạn có thể xem thêm tài liệu về hierarchyCapacity trên <a target="_blank" rel="noopener" href="https://docs.unity3d.com/ScriptReference/Transform-hierarchyCapacity.html">trang chủ Unity</a></p>
+<p>Hoặc một bài blog nói về tối ưu hierarchy của <a target="_blank" rel="noopener" href="https://blog.unity.com/technology/best-practices-from-the-spotlight-team-optimizing-the-hierarchy">unity</a></p>
+<h4 id="Performance-giua-position-va-localPosition"><a href="#Performance-giua-position-va-localPosition" class="headerlink" title="Performance giữa position và localPosition"></a>Performance giữa position và localPosition</h4><p>Theo dõi đoạn code sau đây</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.Profiling;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PerformancePositionAndLocalPosition</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Transform _cacheTransform;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="built_in">int</span> COUNT = <span class="number">1000000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>()</span> &#123; _cacheTransform = transform; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Profiler.BeginSample(<span class="string">&quot;test position&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; COUNT; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> p = _cacheTransform.position;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Profiler.EndSample();</span><br><span class="line"></span><br><span class="line">        Profiler.BeginSample(<span class="string">&quot;test localPosition&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; COUNT; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> p = _cacheTransform.localPosition;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Profiler.EndSample();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Kiểm tra trong hai trường hợp có độ sâu hierarchy khác nhau ta có kết quả sau:</p>
+<p>Với độ sâu là 6:</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-48.jpg" width="600"  alt=""/>
+</p>
+
+<p>localPosition mất 56,57 ms trong khi đó positon là 81,71ms</p>
+<p>Với độ sâu là 3</p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-49.jpg" width="600"  alt=""/>
+</p>
+
+<p>localPosition mất 57,22 ms trong khi đó positon là 67.77ms</p>
+<p>Điều này có nghĩa là độ sâu càng lớn position càng chậm do phải tính toán nhiều transform</p>
+<h4 id="Thong-so-hien-thi-trong-inspector-cua-Transform"><a href="#Thong-so-hien-thi-trong-inspector-cua-Transform" class="headerlink" title="Thông số hiện thị trong inspector của Transform"></a>Thông số hiện thị trong inspector của Transform</h4><p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/gameobject-transform.png" width="600"  alt=""/>
+</p>
+
+<p>Position hiển thị trong Inspector là tọa độ tương đối (tọa độ local)<br>Rotation hiển thị trong Inspector là góc so với parent, mặc dù ghi là rotation nó là giá trị hiển thị của EulerAngle không phải của Quaternion</p>
+<h4 id="Performance-giua-GetComponent-vs-transform"><a href="#Performance-giua-GetComponent-vs-transform" class="headerlink" title="Performance giữa GetComponent vs transform"></a>Performance giữa GetComponent vs transform</h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.Profiling;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GetComponentVsTransform</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="built_in">int</span> COUNT = <span class="number">1000000</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Profiler.BeginSample(<span class="string">&quot;test transform&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; COUNT; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> p = transform;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Profiler.EndSample();</span><br><span class="line"></span><br><span class="line">        Profiler.BeginSample(<span class="string">&quot;test GetComponent&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; COUNT; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> p = GetComponent&lt;Transform&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Profiler.EndSample();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.23/img/transform-50.jpg" width="600"  alt=""/>
+</p>
+
+<p>transform nhanh hơn so với GetComponent</p>
+<h4 id="Khong-di-chuyen-Transform-trong-FixedUpdate"><a href="#Khong-di-chuyen-Transform-trong-FixedUpdate" class="headerlink" title="Không di chuyển Transform trong FixedUpdate"></a>Không di chuyển Transform trong FixedUpdate</h4><p>Đơn giản là vì FixedUpdate không gọi liên từng frame như Update mà nó được giọi cố định sau mỗi 0.02 giây.</p>
+<p>Giả sử ta có FPS (frame per sec) là 30 nghĩa là màn hình sẽ được cập nhật 30 lần mỗi giây.<br>Trong trường hợp trò chơi có FPS là 30 thì mỗi frame sẽ là 0.03 giây.<br>Khi đó Update sẽ được gọi sau mỗi 0.03 giây.<br>Còn với FixedUpdate nó gọi sau mỗi 0.02 giây vậy nếu Update gọi được 2 lần thì FixedUpdate đã được gọi 3 lần</p>
+<p>Bạn có thể xem chỉ số <strong>FixedTimeStep</strong> trong <strong>ProjectSetting</strong></p>
+<p style="text-align: center;">
+  <img src="https://cdn.jsdelivr.net/npm/yenmoc-assets@1.0.26/img/transform-52.jpg" width="600"  alt=""/>
+</p>
+
+<p>Vì FixedUpdate trục thời gian khác với FPS nên nếu di chuyển Transform với FixedUpdate có thể sẽ dẫn đến chuyển động không mong muốn. Đôi khi bạn tính toán quá trình cần được di<br>chuyển bởi một frame lại chạy hai lần và quá trình di chuyển sẽ không đồng bộ.</p>
+<p>Hãy chỉ sử dụng FixedUpdate cho các tính toán vật lý</p>
+<p style="text-align: right;"><b>Bài viết được viết bởi Phong Sơ Yên Mộc</b></p></article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Programming/">Programming</a><a class="post-meta__tags" href="/tags/Guide/">Guide</a><a class="post-meta__tags" href="/tags/Unity/">Unity</a></div><div class="post_share"><div class="social-share" data-image="/img/post-cover/unity-transform.png" data-sites="facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/10/06/unity-introduction/"><img class="next-cover" src="/img/post-cover/unity-introduction.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Lập trình game cơ bản với Unity Engine Phần 1.</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/10/06/unity-introduction/" title="Lập trình game cơ bản với Unity Engine Phần 1."><img class="cover" src="/img/post-cover/unity-introduction.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-06</div><div class="title">Lập trình game cơ bản với Unity Engine Phần 1.</div></div></a></div><div><a href="/2022/09/29/git-world/" title="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào."><img class="cover" src="/img/post-cover/git-world.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào.</div></div></a></div><div><a href="/2022/09/26/how-to-make-a-game/" title="Làm thế nào để làm game? Lập trình game cần những gì?"><img class="cover" src="/img/post-cover/how-to-make-a-game.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-26</div><div class="title">Làm thế nào để làm game? Lập trình game cần những gì?</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Laputa</div><div class="author-info__description">Kiến thức cần được chia sẻ!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/GuardianOfGods"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.instagram.com/hv_thu/" target="_blank" title=""><i class="fab fa-instagram"></i></a><a class="social-icon" href="https://twitter.com/ThanhTn80582218" target="_blank" title=""><i class="fab fa-twitter"></i></a><a class="social-icon" href="mailto:guardian.of.gods99@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Bản cập nhật blog v1.0 đã cập bến. Sẽ có ít nhất 2 bài viết/ tuần, mọi người hãy đón chờ nhé <3.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Doi-loi"><span class="toc-number">1.</span> <span class="toc-text">Đôi lời</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gioi-thieu"><span class="toc-number">2.</span> <span class="toc-text">Giới thiệu</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Component-dac-biet-Transform"><span class="toc-number">2.1.</span> <span class="toc-text">Component đặc biệt Transform</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Transform-luon-duoc-gan-cho-GameObject"><span class="toc-number">2.1.1.</span> <span class="toc-text">Transform luôn được gán cho GameObject</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Khong-the-xoa-Transform"><span class="toc-number">2.1.2.</span> <span class="toc-text">Không thể xóa Transform</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Khong-the-them-nhieu-hon-1-Transform"><span class="toc-number">2.1.3.</span> <span class="toc-text">Không thể thêm nhiều hơn 1 Transform</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GetComponent-la-khong-bat-buoc-de-co-the-su-dung-Transform"><span class="toc-number">2.1.4.</span> <span class="toc-text">GetComponent là không bắt buộc để có thể sử dụng Transform</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notes"><span class="toc-number">2.1.5.</span> <span class="toc-text">Notes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cac-cach-co-ban-de-su-dung-Transfrom"><span class="toc-number">2.2.</span> <span class="toc-text">Các cách cơ bản để sử dụng Transfrom</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Thay-doi-vi-tri-cua-Transform-bang-localPosition-x2F-position"><span class="toc-number">2.2.1.</span> <span class="toc-text">Thay đổi vị trí của Transform bằng localPosition &#x2F; position</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Su-khac-biet-giua-position-va-localPosion-la-gi"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">Sự khác biệt giữa position và localPosion là gì?</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Toa-do-tuyet-doi-%E2%80%9Cposition%E2%80%9D-la-gi"><span class="toc-number">2.2.1.1.1.</span> <span class="toc-text">Tọa độ tuyệt đối “position” là gì?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Toa-do-tuong-doi-%E2%80%9ClocalPosition%E2%80%9D-la-gi"><span class="toc-number">2.2.1.1.2.</span> <span class="toc-text">Tọa độ tương đối “localPosition” là gì?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Phan-biet-position-va-localPosition"><span class="toc-number">2.2.1.1.3.</span> <span class="toc-text">Phân biệt position và localPosition</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Don-vi-trong-Unity-la-met"><span class="toc-number">2.2.1.1.4.</span> <span class="toc-text">Đơn vị trong Unity là mét</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Vector3-la-gi"><span class="toc-number">2.2.1.1.5.</span> <span class="toc-text">Vector3 là gì?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Di-chuyen-vi-tri-bang-phuong-thuc-Translate"><span class="toc-number">2.2.1.1.6.</span> <span class="toc-text">Di chuyển vị trí bằng phương thức Translate</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thay-doi-goc-xoay-bang-eulerAngles"><span class="toc-number">2.2.2.</span> <span class="toc-text">Thay đổi góc xoay bằng eulerAngles</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Thay-doi-goc-voi-localEulerAngles-x2F-eulerAngles"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">Thay đổi góc với localEulerAngles &#x2F; eulerAngles</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thay-doi-goc-voi-localRotation-x2F-rotation"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">Thay đổi góc với localRotation &#x2F; rotation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thay-doi-ti-le-bang-localScale"><span class="toc-number">2.2.3.</span> <span class="toc-text">Thay đổi tỉ lệ bằng localScale</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Su-dung-setParrent-de-thay-doi-he-thong-phan-cap"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">Sử dụng setParrent để thay đổi hệ thống phân cấp</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Truy-cap-doi-tuong-parent"><span class="toc-number">2.2.4.</span> <span class="toc-text">Truy cập đối tượng parent</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Parent-tra-ve-null"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">Parent trả về null</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Truy-cap-root"><span class="toc-number">2.2.4.2.</span> <span class="toc-text">Truy cập root</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Phu-luc"><span class="toc-number">2.3.</span> <span class="toc-text">Phụ lục</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Phuong-thuc-LookAt"><span class="toc-number">2.3.1.</span> <span class="toc-text">Phương thức LookAt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transform-animation"><span class="toc-number">2.3.2.</span> <span class="toc-text">Transform animation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Su-dung-Update"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">Sử dụng Update</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Su-dung-AnimationClip"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">Sử dụng AnimationClip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Su-dung-Tween"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">Sử dụng Tween</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xoay-quanh-truc-hoac-toa-do-duoc-chi-dinh"><span class="toc-number">2.3.3.</span> <span class="toc-text">Xoay quanh trục hoặc tọa độ được chỉ định</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Truy-cap-vao-cac-doi-tuong-con"><span class="toc-number">2.3.4.</span> <span class="toc-text">Truy cập vào các đối tượng con</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Foreach"><span class="toc-number">2.3.4.1.</span> <span class="toc-text">Foreach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GetChild"><span class="toc-number">2.3.4.2.</span> <span class="toc-text">GetChild</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lay-toan-bo-cac-doi-tuong-con"><span class="toc-number">2.3.4.3.</span> <span class="toc-text">Lấy toàn bộ các đối tượng con</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IsChildOf"><span class="toc-number">2.3.5.</span> <span class="toc-text">IsChildOf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LossyScale"><span class="toc-number">2.3.6.</span> <span class="toc-text">LossyScale</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performance"><span class="toc-number">2.3.7.</span> <span class="toc-text">Performance</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cache-transform"><span class="toc-number">2.3.7.1.</span> <span class="toc-text">Cache transform</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thay-vi-tri-va-goc-xoay-cung-luc"><span class="toc-number">2.3.7.2.</span> <span class="toc-text">Thay vị trí và góc xoay cùng lúc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Performance-cho-hierarchy"><span class="toc-number">2.3.7.3.</span> <span class="toc-text">Performance cho hierarchy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Performance-giua-position-va-localPosition"><span class="toc-number">2.3.7.4.</span> <span class="toc-text">Performance giữa position và localPosition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thong-so-hien-thi-trong-inspector-cua-Transform"><span class="toc-number">2.3.7.5.</span> <span class="toc-text">Thông số hiện thị trong inspector của Transform</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Performance-giua-GetComponent-vs-transform"><span class="toc-number">2.3.7.6.</span> <span class="toc-text">Performance giữa GetComponent vs transform</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Khong-di-chuyen-Transform-trong-FixedUpdate"><span class="toc-number">2.3.7.7.</span> <span class="toc-text">Không di chuyển Transform trong FixedUpdate</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/26/unity-transform/" title="Bí kíp thất truyền về Transform trong Unity."><img src="/img/post-cover/unity-transform.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bí kíp thất truyền về Transform trong Unity."/></a><div class="content"><a class="title" href="/2022/10/26/unity-transform/" title="Bí kíp thất truyền về Transform trong Unity.">Bí kíp thất truyền về Transform trong Unity.</a><time datetime="2022-10-26T14:48:13.000Z" title="Created 2022-10-26 21:48:13">2022-10-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/06/unity-introduction/" title="Lập trình game cơ bản với Unity Engine Phần 1."><img src="/img/post-cover/unity-introduction.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lập trình game cơ bản với Unity Engine Phần 1."/></a><div class="content"><a class="title" href="/2022/10/06/unity-introduction/" title="Lập trình game cơ bản với Unity Engine Phần 1.">Lập trình game cơ bản với Unity Engine Phần 1.</a><time datetime="2022-10-06T14:18:13.000Z" title="Created 2022-10-06 21:18:13">2022-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/29/git-world/" title="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào."><img src="/img/post-cover/git-world.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào."/></a><div class="content"><a class="title" href="/2022/09/29/git-world/" title="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào.">Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào.</a><time datetime="2022-09-29T14:06:31.000Z" title="Created 2022-09-29 21:06:31">2022-09-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/26/how-to-make-a-game/" title="Làm thế nào để làm game? Lập trình game cần những gì?"><img src="/img/post-cover/how-to-make-a-game.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Làm thế nào để làm game? Lập trình game cần những gì?"/></a><div class="content"><a class="title" href="/2022/09/26/how-to-make-a-game/" title="Làm thế nào để làm game? Lập trình game cần những gì?">Làm thế nào để làm game? Lập trình game cần những gì?</a><time datetime="2022-09-26T13:48:38.000Z" title="Created 2022-09-26 20:48:38">2022-09-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/21/vietnam-video-game-industry/" title="Ngành công nghiệp Game ở Việt Nam"><img src="/img/post-cover/unity-cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ngành công nghiệp Game ở Việt Nam"/></a><div class="content"><a class="title" href="/2022/09/21/vietnam-video-game-industry/" title="Ngành công nghiệp Game ở Việt Nam">Ngành công nghiệp Game ở Việt Nam</a><time datetime="2022-09-21T14:34:43.293Z" title="Created 2022-09-21 21:34:43">2022-09-21</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/post-cover/unity-transform.png')"><div id="footer-wrap"><div class="copyright">&copy;2022 By Laputa</div><p> ỦNG HỘ MÌNH QUA</p>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-momo" target="_blank" href="https://me.momo.vn/gMIMugTbCafaTquWuluW"><img src="/img/donate/momo.png" alt="Momo"><span style="margin-left:5px">Momo</span></a>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-coffee" target="_blank" href="https://www.buymeacoffee.com/HoangVanThu"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-paypal" target="_blank" href="https://paypal.me/guardianofgods?country.x=VN&locale.x=vi_VN"><img src="/img/donate/paypal.png" alt="Paypal"><span style="margin-left:5px">Paypal</span></a><div class="footer_custom_text">Lấy đao chém xuống nước, nước càng chảy. Nâng chén tiêu sầu, sầu càng sâu.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guardianofgods.github.io/2022/10/26/unity-transform/'
+    this.page.identifier = '/2022/10/26/unity-transform/'
+    this.page.title = 'Bí kíp thất truyền về Transform trong Unity.'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-www-laputa-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Disqus' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><canvas id="universe"></canvas><script src="/js/universal.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="true"></script><script src="//code.tidio.co/uw0qc4uh6a9jnenr5kvddtnwffyorimq.js" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/unitychan.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":60,"vOffset":-40},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body></html>
