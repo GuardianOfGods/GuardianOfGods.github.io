@@ -1,0 +1,502 @@
+<!DOCTYPE html><html lang="vi" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Sự kiện và các tuyệt kỹ của Mono-behaviour. | Chào mừng tới Laputa</title><meta name="keywords" content="Programming,Guide,Unity"><meta name="author" content="Laputa"><meta name="copyright" content="Laputa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Luồng dữ liệu, cách xử lý các sự kiện trong class Monobehaviour của Unity.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sự kiện và các tuyệt kỹ của Mono-behaviour.">
+<meta property="og:url" content="https://guardianofgods.github.io/2022/10/27/unity-monobehaviour/index.html">
+<meta property="og:site_name" content="Chào mừng tới Laputa">
+<meta property="og:description" content="Luồng dữ liệu, cách xử lý các sự kiện trong class Monobehaviour của Unity.">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:image" content="https://guardianofgods.github.io/img/post-cover/unity-monobehaviour.jpg">
+<meta property="article:published_time" content="2022-10-27T14:51:51.000Z">
+<meta property="article:modified_time" content="2022-10-30T09:17:22.916Z">
+<meta property="article:author" content="Laputa">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guardianofgods.github.io/img/post-cover/unity-monobehaviour.jpg"><link rel="shortcut icon" href="/img/header.png"><link rel="canonical" href="https://guardianofgods.github.io/2022/10/27/unity-monobehaviour/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Sự kiện và các tuyệt kỹ của Mono-behaviour.',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-30 16:17:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1734851905418363" crossorigin="anonymous"></script><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/css/tag.css"><style>#article-container.post-content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { -webkit-animation: avatar_turn_around 1s linear infinite; -moz-animation: avatar_turn_around 1s linear infinite; -o-animation: avatar_turn_around 1s linear infinite; -ms-animation: avatar_turn_around 1s linear infinite; animation: avatar_turn_around 1s linear infinite; }</style><link rel="stylesheet" href="/css/font-awesome-v6.0.0.css.css"><link rel="stylesheet" href="/css/op-content.css"><link rel="stylesheet" href="/css/universal.css"><link rel="stylesheet" href="/css/donate.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/lucky-wheel.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Trang chủ</span></a></div><div class="menus_item"><a class="site-page" href="/news"><i class="fa-fw fa-solid fa-newspaper"></i><span> Tin tức</span></a></div><div class="menus_item"><a class="site-page" href="/games"><i class="fa-fw fa fa-gamepad"></i><span> Trò chơi</span></a></div><div class="menus_item"><a class="site-page" href="/boardgames"><i class="fa-fw fa-solid fa-dice"></i><span> Boardgame</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Bài viết</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Thành tựu</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Thể loại</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> Giới thiệu</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/post-cover/unity-monobehaviour.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Chào mừng tới Laputa</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Trang chủ</span></a></div><div class="menus_item"><a class="site-page" href="/news"><i class="fa-fw fa-solid fa-newspaper"></i><span> Tin tức</span></a></div><div class="menus_item"><a class="site-page" href="/games"><i class="fa-fw fa fa-gamepad"></i><span> Trò chơi</span></a></div><div class="menus_item"><a class="site-page" href="/boardgames"><i class="fa-fw fa-solid fa-dice"></i><span> Boardgame</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Bài viết</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Thành tựu</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Thể loại</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> Giới thiệu</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Sự kiện và các tuyệt kỹ của Mono-behaviour.</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-10-27T14:51:51.000Z" title="Created 2022-10-27 21:51:51">2022-10-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-10-30T09:17:22.916Z" title="Updated 2022-10-30 16:17:22">2022-10-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Programming/">Programming</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Programming/Unity/">Unity</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Sự kiện và các tuyệt kỹ của Mono-behaviour."><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Y-kien-trinh-bay"><a href="#Y-kien-trinh-bay" class="headerlink" title="Ý kiến trình bày"></a>Ý kiến trình bày</h1><p>Hello, mình là Laputa. Trong bài viết này mình sẽ đề cập tới class chính của Unity đó là Monobehaviour, mình sẽ viết tắt là Mono cho ngắn và xúc xích. Cùng đi vào chủ đề này luôn nhé.</p>
+<ul>
+<li>Ghi chú:<br>(1) class: lớp<br>(2) script: tệp lệnh<br>(3) mono: class monobehaviour (không phải em trai Sơn Tùng)<br>(4) event message: sự kiện thông điệp. Sự kiện viết sẵn bởi Unity và được cập nhật mỗi khi có một thông điệp xảy ra.</li>
+</ul>
+<h1 id="Monobehaviour"><a href="#Monobehaviour" class="headerlink" title="Monobehaviour"></a>Monobehaviour</h1><h2 id="Gioi-thieu-tong-quan"><a href="#Gioi-thieu-tong-quan" class="headerlink" title="Giới thiệu tổng quan"></a>Giới thiệu tổng quan</h2><p>Monobehaviour là lớp cơ sở (base class) được sử dụng trong hầu hết các dẫn xuất của script.<br>Khi tạo một script trong Unity, hiển nhiên script đó sẽ được kế thừa class mono có sẵn khung với hàm sự kiện là Start với Update - đây cũng là 2 hàm sự kiện được dùng nhiều nhất.</p>
+<h2 id="Thuoc-tinh"><a href="#Thuoc-tinh" class="headerlink" title="Thuộc tính"></a>Thuộc tính</h2><table>
+<thead>
+<tr>
+<th>Tên thuộc tính</th>
+<th>Giải thích</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>runInEditMode</td>
+<td><code>Chỉ cho phép thực thi nếu chạy trên editor</code></td>
+</tr>
+<tr>
+<td>useGUILayout</td>
+<td><code>Vô hiệu hóa GUI</code></td>
+</tr>
+<tr>
+<td>enabled</td>
+<td><code>Trạng thái script được bật/tắt.</code></td>
+</tr>
+<tr>
+<td>isActiveAndEnabled</td>
+<td><code>Có đang hoạt và được bật</code></td>
+</tr>
+<tr>
+<td>gameObject</td>
+<td><code>Gameobject được script này gắn vào. script chắc chắn sẽ được gắn vào gameobject</code></td>
+</tr>
+<tr>
+<td>tag</td>
+<td><code>Tag của gameobject này</code></td>
+</tr>
+<tr>
+<td>transform</td>
+<td><code>Transform của gameobject này</code></td>
+</tr>
+<tr>
+<td>hideFlags</td>
+<td><code>Đối tượng có nên được ẩn, lưu scene hoặc có thể sửa đổi bởi người dùng?</code></td>
+</tr>
+<tr>
+<td>name</td>
+<td><code>Tên của gameobject</code></td>
+</tr>
+</tbody></table>
+<h2 id="Cac-su-kien-thong-diep"><a href="#Cac-su-kien-thong-diep" class="headerlink" title="Các sự kiện thông điệp"></a>Các sự kiện thông điệp</h2><table>
+<thead>
+<tr>
+<th>Tên sự kiện</th>
+<th>Giải thích</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Awake</td>
+<td><code>Gọi khi phiên bản script đang được tải.</code></td>
+</tr>
+<tr>
+<td>FixedUpdate</td>
+<td><code>Gọi thông qua mỗi khung hình. Nên sử dụng trong vật lý</code></td>
+</tr>
+<tr>
+<td>LateUpdate</td>
+<td><code>Gọi thông qua mỗi khung hình, nhưng được gọi cuối. Khuyến khích dùng trong camera.</code></td>
+</tr>
+<tr>
+<td>OnApplicationFocus</td>
+<td><code>Gọi mỗi tập trung vào chương trình - khi nhấn vào màn scene hoặc game</code></td>
+</tr>
+<tr>
+<td>OnApplicationPause</td>
+<td><code>Gọi khi pause chương trình</code></td>
+</tr>
+<tr>
+<td>OnApplicationQuit</td>
+<td><code>Gọi khi thoát chương trình</code></td>
+</tr>
+<tr>
+<td>OnBecameInvisible</td>
+<td><code>Gọi khi vật thể không được render bởi bất kì camera nào (tính cả camera của scene). Chỉ sử dụng nếu vật có mesh</code></td>
+</tr>
+<tr>
+<td>OnBecameVisible</td>
+<td><code>Gọi khi vật thể được render bởi bất kì camera nào (tính cả camera của scene). Chỉ sử dụng nếu vật có mesh</code></td>
+</tr>
+<tr>
+<td>OnCollisionEnter</td>
+<td><code>Gọi khi vật thể này tương tác vật lý lần đầu vật thể khác - 3D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnCollisionEnter2D</td>
+<td><code>Gọi khi vật thể này tương tác vật lý lần đầu vật thể khác - 2D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnCollisionExit</td>
+<td><code>Gọi khi vật thể này thoát tương tác vật lý vật thể khác - 3D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnCollisionExit2D</td>
+<td><code>Gọi khi vật thể này đang tương tác vật lý vật thể khác - 2D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnCollisionStay</td>
+<td><code>Gọi khi vật thể này đang tương tác vật lý vật thể khác - 3D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnCollisionStay2D</td>
+<td><code>Gọi khi vật thể này đang tương tác vật lý vật thể khác - 2D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnDestroy</td>
+<td><code>Gọi khi vật thể bị destroy</code></td>
+</tr>
+<tr>
+<td>OnDisable</td>
+<td><code>Gọi khi vật thể bị disable</code></td>
+</tr>
+<tr>
+<td>OnDrawGizmos</td>
+<td><code>Gọi khi bật chế độ gizmos trong màn game</code></td>
+</tr>
+<tr>
+<td>OnEnable</td>
+<td><code>Gọi khi vật thể được enable</code></td>
+</tr>
+<tr>
+<td>OnGUI</td>
+<td><code>Gọi khi vật thể hiển thị lên GUI</code></td>
+</tr>
+<tr>
+<td>OnMouseDown</td>
+<td><code>Gọi khi nhấn chuột xuống. Phải có collider</code></td>
+</tr>
+<tr>
+<td>OnMouseDrag</td>
+<td><code>Gọi khi nhấn kéo chuột. Phải có collider</code></td>
+</tr>
+<tr>
+<td>OnMouseEnter</td>
+<td><code>Gọi khi nhấn chuột vào. Phải có collider</code></td>
+</tr>
+<tr>
+<td>OnMouseExit</td>
+<td><code>Gọi khi nhấn di chuột ra ngoài. Phải có collider</code></td>
+</tr>
+<tr>
+<td>OnMouseOver</td>
+<td><code>Gọi khi nhấn di chuột đến. Phải có collider</code></td>
+</tr>
+<tr>
+<td>OnMouseUp</td>
+<td><code>Gọi khi nhấn thả chuột. Phải có collider</code></td>
+</tr>
+<tr>
+<td>OnRenderObject</td>
+<td><code>Gọi render vật thể</code></td>
+</tr>
+<tr>
+<td>OnTransformChildrenChanged</td>
+<td><code>Gọi khi vị trí của gameobject con thay đổi</code></td>
+</tr>
+<tr>
+<td>OnTransformParentChanged</td>
+<td><code>Gọi khi vị trí của gameobject cha thay đổi</code></td>
+</tr>
+<tr>
+<td>OnTriggerEnter</td>
+<td><code>Gọi khi vật thể này tương tác trigger lần đầu vật thể khác - 3D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnTriggerEnter2D</td>
+<td><code>Gọi khi vật thể này tương tác trigger lần đầu vật thể khác - 2D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnTriggerExit</td>
+<td><code>Gọi khi vật thể này thoát tương tác trigger vật thể khác - 3D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnTriggerExit2D</td>
+<td><code>Gọi khi vật thể này thoát tương tác trigger vật thể khác - 2D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnTriggerStay</td>
+<td><code>Gọi khi vật thể này đang tương tác trigger vật thể khác - 3D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnTriggerStay2D</td>
+<td><code>Gọi khi vật thể này đang tương tác trigger vật thể khác - 2D. Áp dụng định lý va chạm trong unity</code></td>
+</tr>
+<tr>
+<td>OnValidate</td>
+<td><code>Gọi khi giữ liệu thay đổi</code></td>
+</tr>
+<tr>
+<td>Reset</td>
+<td><code>Gọi khi được đặt lại giá trị mặc định</code></td>
+</tr>
+<tr>
+<td>Start</td>
+<td><code>Gọi khi khung hình đầu tiên được bắt đầu</code></td>
+</tr>
+<tr>
+<td>Update</td>
+<td><code>Gọi trong mọi khung hình. Khi mono được bật</code></td>
+</tr>
+</tbody></table>
+<h2 id="Cac-phuong-thuc"><a href="#Cac-phuong-thuc" class="headerlink" title="Các phương thức"></a>Các phương thức</h2><table>
+<thead>
+<tr>
+<th>Tên Phương thức</th>
+<th>Giải thích</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CancelInvoke</td>
+<td><code>Hủy mọi invoke đang được chờ thực thi trong script đó</code></td>
+</tr>
+<tr>
+<td>Invoke</td>
+<td><code>Gọi một hàm trong một thời gian</code></td>
+</tr>
+<tr>
+<td>InvokeRepeating</td>
+<td><code>Gọi một hàm trong một thời gian. Sau đó lặp lại theo repeatRate</code></td>
+</tr>
+<tr>
+<td>IsInvoking</td>
+<td><code>Có invoke nào đang được chờ không</code></td>
+</tr>
+<tr>
+<td>StartCoroutine</td>
+<td><code>Bắt đầu coroutine</code></td>
+</tr>
+<tr>
+<td>StopAllCoroutines</td>
+<td><code>Dừng mọi coroutine trong script</code></td>
+</tr>
+<tr>
+<td>StopCoroutine</td>
+<td><code>Dừng coroutine cụ thể</code></td>
+</tr>
+<tr>
+<td>CompareTag</td>
+<td><code>Kiểm tra tag giữa 2 gameobject</code></td>
+</tr>
+<tr>
+<td>GetComponent</td>
+<td><code>Trả về component đầu tiên theo type trong gameobject đó</code></td>
+</tr>
+<tr>
+<td>GetComponentInChildren</td>
+<td><code>Trả về component đầu tiên theo type trong gameobject và tất cả con của gameobject đó. Sử dụng tìm kiếm duyệt sâu (DFS)</code></td>
+</tr>
+<tr>
+<td>GetComponentInParent</td>
+<td><code>Trả về component đầu tiên theo type trong gameobject và cha của gameobject đó</code></td>
+</tr>
+<tr>
+<td>GetComponents</td>
+<td><code>Trả về mảng các component đầu tiên theo type trong gameobject đó</code></td>
+</tr>
+<tr>
+<td>GetComponentsInChildren</td>
+<td><code>Trả về mảng các component đầu tiên theo type trong con của gameobject đó</code></td>
+</tr>
+<tr>
+<td>GetComponentsInParent</td>
+<td><code>Trả về component đầu tiên theo type trong gameobject và tất cả cha của gameobject đó. Sử dụng tìm kiếm duyệt sâu (DFS)</code></td>
+</tr>
+<tr>
+<td>TryGetComponent</td>
+<td><code>Lấy ra một component có type đặc biệt. Nếu có</code></td>
+</tr>
+<tr>
+<td>ToString</td>
+<td><code>Trả về tên object</code></td>
+</tr>
+</tbody></table>
+<h2 id="Thu-tu-thuc-thi-cac-su-kien-thong-diep"><a href="#Thu-tu-thuc-thi-cac-su-kien-thong-diep" class="headerlink" title="Thứ tự thực thi các sự kiện thông điệp"></a>Thứ tự thực thi các sự kiện thông điệp</h2><p><img src="/img/post/unity-monobehaviour/monobehaviour_flowchart.svg" alt="alt"></p>
+<p style="text-align: center;"><b>Theo document của unity</b></p>
+
+<h2 id="Ky-nang-su-dung"><a href="#Ky-nang-su-dung" class="headerlink" title="Kỹ năng sử dụng"></a>Kỹ năng sử dụng</h2><h3 id="Awake-duoc-goi-ngau-nhien-trong-cung-frame"><a href="#Awake-duoc-goi-ngau-nhien-trong-cung-frame" class="headerlink" title="Awake được gọi ngẫu nhiên trong cùng frame"></a>Awake được gọi ngẫu nhiên trong cùng frame</h3><p>Awake được chạy theo số InstanceID của Component, mỗi InstanceID sẽ bị thay đổi trong quá trình sử dụng editor &#x3D;&gt; Awake và Start được gọi ngẫu nhiên</p>
+<h3 id="FixedUpdate-nen-dung-cho-vat-ly"><a href="#FixedUpdate-nen-dung-cho-vat-ly" class="headerlink" title="FixedUpdate nên dùng cho vật lý"></a>FixedUpdate nên dùng cho vật lý</h3><p>Monobehaviour.FixedUpdate có tần số của hệ thống vật lý. Đơn giản là vì FixedUpdate không gọi liên từng frame như Update mà nó được giọi cố định sau mỗi 0.02 giây.</p>
+<p>Giả sử ta có FPS (frame per sec) là 30 nghĩa là màn hình sẽ được cập nhật 30 lần mỗi giây. Trong trường hợp trò chơi có FPS là 30 thì mỗi frame sẽ là 0.03 giây. Khi đó Update sẽ được gọi sau mỗi 0.03 giây. Còn với FixedUpdate nó gọi sau mỗi 0.02 giây vậy nếu Update gọi được 2 lần thì FixedUpdate đã được gọi 3 lần. Điều này sẽ giúp game bạn khi dùng vật lý trông mượt hơn.</p>
+<p><img src="/img/post/unity-monobehaviour/1.png" alt="alt"></p>
+<p style="text-align: center;"><b>Chỉ số FixedTimeStep trong ProjectSetting</b></p>
+
+<h3 id="LateUpdate-nen-dung-cho-camera"><a href="#LateUpdate-nen-dung-cho-camera" class="headerlink" title="LateUpdate nên dùng cho camera"></a>LateUpdate nên dùng cho camera</h3><p>LateUpdate sẽ được gọi cuối sau Update. Điều này giúp camera sẽ không bị bỏ qua một số khung hình bị sót. Cho một ví dụ đơn giản:<br>Nếu trong trường hợp tốt nhất nếu như Camera và Nhân vật di chuyển đều sử dụng Update:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(1) Nhân vật di chuyển -&gt; Camera cập nhật khung hình</span><br><span class="line">(2) Nhân vật di chuyển -&gt; Camera cập nhật khung hình</span><br><span class="line">(3) Nhân vật di chuyển -&gt; Camera cập nhật khung hình</span><br></pre></td></tr></table></figure>
+<p>Nhưng Update không chạy theo thứ tự mà nó chạy ngẫu nhiên trong các script khác nhau nên xảy ra:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(1) Nhân vật di chuyển -&gt; Camera cập nhật khung hình</span><br><span class="line">(2) Camera cập nhật khung hình -&gt; Nhân vật di chuyển (Mất khung hình khi nhân vật di chuyển)</span><br><span class="line">(3) Camera cập nhật khung hình -&gt; Nhân vật di chuyển (Mất khung hình khi nhân vật di chuyển)</span><br><span class="line">(4) Nhân vật di chuyển -&gt; Camera cập nhật khung hình</span><br></pre></td></tr></table></figure>
+<p>Để đạt được như trong trường hợp tốt nhất thì mỗi khi update trạng thái di chuyển nhân vật chúng ta mới update camera. Vì vậy Lateupdate cho camera là một giải pháp vô cùng phù hợp</p>
+<p><img src="/img/post/unity-monobehaviour/1.gif" alt="alt"></p>
+<p style="text-align: center;"><b>Ví dụ minh họa</b></p>
+
+<h1 id="Ket-thuc"><a href="#Ket-thuc" class="headerlink" title="Kết thúc"></a>Kết thúc</h1><p>Mình sẽ không liệt kê hết các thông tin về mono mà chỉ đề cập những api thường được sử dụng.</p>
+<p>Link tham khảo:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">https://docs.unity3d.com/ScriptReference/MonoBehaviour.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/ExecutionOrder.html">https://docs.unity3d.com/Manual/ExecutionOrder.html</a></li>
+</ul>
+<p style="text-align: right;"><b>Bài viết được viết bởi Laputa</b></p></article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Programming/">Programming</a><a class="post-meta__tags" href="/tags/Guide/">Guide</a><a class="post-meta__tags" href="/tags/Unity/">Unity</a></div><div class="post_share"><div class="social-share" data-image="/img/post-cover/unity-monobehaviour.jpg" data-sites="facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/10/26/unity-transform/"><img class="next-cover" src="/img/post-cover/unity-transform.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Bí kíp thất truyền về Transform trong Unity.</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/10/06/unity-introduction/" title="Lập trình game cơ bản với Unity Engine Phần 1."><img class="cover" src="/img/post-cover/unity-introduction.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-06</div><div class="title">Lập trình game cơ bản với Unity Engine Phần 1.</div></div></a></div><div><a href="/2022/10/26/unity-transform/" title="Bí kíp thất truyền về Transform trong Unity."><img class="cover" src="/img/post-cover/unity-transform.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-26</div><div class="title">Bí kíp thất truyền về Transform trong Unity.</div></div></a></div><div><a href="/2022/09/29/git-world/" title="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào."><img class="cover" src="/img/post-cover/git-world.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào.</div></div></a></div><div><a href="/2022/09/26/how-to-make-a-game/" title="Làm thế nào để làm game? Lập trình game cần những gì?"><img class="cover" src="/img/post-cover/how-to-make-a-game.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-26</div><div class="title">Làm thế nào để làm game? Lập trình game cần những gì?</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Laputa</div><div class="author-info__description">Kiến thức cần được chia sẻ!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/GuardianOfGods"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.instagram.com/hv_thu/" target="_blank" title=""><i class="fab fa-instagram"></i></a><a class="social-icon" href="https://twitter.com/ThanhTn80582218" target="_blank" title=""><i class="fab fa-twitter"></i></a><a class="social-icon" href="mailto:guardian.of.gods99@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Bản cập nhật blog v1.0 đã cập bến. Sẽ có ít nhất 2 bài viết/ tuần, mọi người hãy đón chờ nhé <3.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Y-kien-trinh-bay"><span class="toc-number">1.</span> <span class="toc-text">Ý kiến trình bày</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monobehaviour"><span class="toc-number">2.</span> <span class="toc-text">Monobehaviour</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Gioi-thieu-tong-quan"><span class="toc-number">2.1.</span> <span class="toc-text">Giới thiệu tổng quan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thuoc-tinh"><span class="toc-number">2.2.</span> <span class="toc-text">Thuộc tính</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cac-su-kien-thong-diep"><span class="toc-number">2.3.</span> <span class="toc-text">Các sự kiện thông điệp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cac-phuong-thuc"><span class="toc-number">2.4.</span> <span class="toc-text">Các phương thức</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thu-tu-thuc-thi-cac-su-kien-thong-diep"><span class="toc-number">2.5.</span> <span class="toc-text">Thứ tự thực thi các sự kiện thông điệp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ky-nang-su-dung"><span class="toc-number">2.6.</span> <span class="toc-text">Kỹ năng sử dụng</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Awake-duoc-goi-ngau-nhien-trong-cung-frame"><span class="toc-number">2.6.1.</span> <span class="toc-text">Awake được gọi ngẫu nhiên trong cùng frame</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FixedUpdate-nen-dung-cho-vat-ly"><span class="toc-number">2.6.2.</span> <span class="toc-text">FixedUpdate nên dùng cho vật lý</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LateUpdate-nen-dung-cho-camera"><span class="toc-number">2.6.3.</span> <span class="toc-text">LateUpdate nên dùng cho camera</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ket-thuc"><span class="toc-number">3.</span> <span class="toc-text">Kết thúc</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/27/unity-monobehaviour/" title="Sự kiện và các tuyệt kỹ của Mono-behaviour."><img src="/img/post-cover/unity-monobehaviour.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sự kiện và các tuyệt kỹ của Mono-behaviour."/></a><div class="content"><a class="title" href="/2022/10/27/unity-monobehaviour/" title="Sự kiện và các tuyệt kỹ của Mono-behaviour.">Sự kiện và các tuyệt kỹ của Mono-behaviour.</a><time datetime="2022-10-27T14:51:51.000Z" title="Created 2022-10-27 21:51:51">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/26/unity-transform/" title="Bí kíp thất truyền về Transform trong Unity."><img src="/img/post-cover/unity-transform.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bí kíp thất truyền về Transform trong Unity."/></a><div class="content"><a class="title" href="/2022/10/26/unity-transform/" title="Bí kíp thất truyền về Transform trong Unity.">Bí kíp thất truyền về Transform trong Unity.</a><time datetime="2022-10-26T14:48:13.000Z" title="Created 2022-10-26 21:48:13">2022-10-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/06/unity-introduction/" title="Lập trình game cơ bản với Unity Engine Phần 1."><img src="/img/post-cover/unity-introduction.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lập trình game cơ bản với Unity Engine Phần 1."/></a><div class="content"><a class="title" href="/2022/10/06/unity-introduction/" title="Lập trình game cơ bản với Unity Engine Phần 1.">Lập trình game cơ bản với Unity Engine Phần 1.</a><time datetime="2022-10-06T14:18:13.000Z" title="Created 2022-10-06 21:18:13">2022-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/29/git-world/" title="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào."><img src="/img/post-cover/git-world.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào."/></a><div class="content"><a class="title" href="/2022/09/29/git-world/" title="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào.">Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào.</a><time datetime="2022-09-29T14:06:31.000Z" title="Created 2022-09-29 21:06:31">2022-09-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/26/how-to-make-a-game/" title="Làm thế nào để làm game? Lập trình game cần những gì?"><img src="/img/post-cover/how-to-make-a-game.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Làm thế nào để làm game? Lập trình game cần những gì?"/></a><div class="content"><a class="title" href="/2022/09/26/how-to-make-a-game/" title="Làm thế nào để làm game? Lập trình game cần những gì?">Làm thế nào để làm game? Lập trình game cần những gì?</a><time datetime="2022-09-26T13:48:38.000Z" title="Created 2022-09-26 20:48:38">2022-09-26</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/post-cover/unity-monobehaviour.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 By Laputa</div><p> ỦNG HỘ MÌNH QUA</p>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-momo" target="_blank" href="https://me.momo.vn/gMIMugTbCafaTquWuluW"><img src="/img/donate/momo.png" alt="Momo"><span style="margin-left:5px">Momo</span></a>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-coffee" target="_blank" href="https://www.buymeacoffee.com/HoangVanThu"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-paypal" target="_blank" href="https://paypal.me/guardianofgods?country.x=VN&locale.x=vi_VN"><img src="/img/donate/paypal.png" alt="Paypal"><span style="margin-left:5px">Paypal</span></a><div class="footer_custom_text">Lấy đao chém xuống nước, nước càng chảy. Nâng chén tiêu sầu, sầu càng sâu.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guardianofgods.github.io/2022/10/27/unity-monobehaviour/'
+    this.page.identifier = '/2022/10/27/unity-monobehaviour/'
+    this.page.title = 'Sự kiện và các tuyệt kỹ của Mono-behaviour.'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-www-laputa-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Disqus' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><canvas id="universe"></canvas><script src="/js/universal.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="true"></script><script src="//code.tidio.co/uw0qc4uh6a9jnenr5kvddtnwffyorimq.js" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/unitychan.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":60,"vOffset":-40},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body></html>
