@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="vi" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Xử lý va chạm trong Unity | Chào mừng tới Laputa</title><meta name="keywords" content="Programming,Guide,Unity"><meta name="author" content="Laputa"><meta name="copyright" content="Laputa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Giải thích cách hoạt động va chạm trong Unity, các tính chất của collision.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xử lý va chạm trong Unity">
+<meta property="og:url" content="https://guardianofgods.github.io/2022/12/18/unity-physics/index.html">
+<meta property="og:site_name" content="Chào mừng tới Laputa">
+<meta property="og:description" content="Giải thích cách hoạt động va chạm trong Unity, các tính chất của collision.">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:image" content="https://guardianofgods.github.io/img/post-cover/unity-physics.jpg">
+<meta property="article:published_time" content="2022-12-18T15:18:33.000Z">
+<meta property="article:modified_time" content="2022-12-27T13:13:18.631Z">
+<meta property="article:author" content="Laputa">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guardianofgods.github.io/img/post-cover/unity-physics.jpg"><link rel="shortcut icon" href="/img/header.png"><link rel="canonical" href="https://guardianofgods.github.io/2022/12/18/unity-physics/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-1734851905418363',
+  enable_page_level_ads: 'true'
+});</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Xử lý va chạm trong Unity',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-27 20:13:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1734851905418363" crossorigin="anonymous"></script><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/css/tag.css"><style>#article-container.post-content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { -webkit-animation: avatar_turn_around 1s linear infinite; -moz-animation: avatar_turn_around 1s linear infinite; -o-animation: avatar_turn_around 1s linear infinite; -ms-animation: avatar_turn_around 1s linear infinite; animation: avatar_turn_around 1s linear infinite; }</style><link rel="stylesheet" href="/css/font-awesome-v6.0.0.css.css"><link rel="stylesheet" href="/css/op-content.css"><link rel="stylesheet" href="/css/universal.css"><link rel="stylesheet" href="/css/donate.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/lucky-wheel.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Trang chủ</span></a></div><div class="menus_item"><a class="site-page" href="/news"><i class="fa-fw fa-solid fa-newspaper"></i><span> Tin tức</span></a></div><div class="menus_item"><a class="site-page" href="/games"><i class="fa-fw fa fa-gamepad"></i><span> Trò chơi</span></a></div><div class="menus_item"><a class="site-page" href="/boardgames"><i class="fa-fw fa-solid fa-dice"></i><span> Boardgame</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Bài viết</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Thành tựu</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Thể loại</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> Giới thiệu</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/post-cover/unity-physics.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Chào mừng tới Laputa</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Trang chủ</span></a></div><div class="menus_item"><a class="site-page" href="/news"><i class="fa-fw fa-solid fa-newspaper"></i><span> Tin tức</span></a></div><div class="menus_item"><a class="site-page" href="/games"><i class="fa-fw fa fa-gamepad"></i><span> Trò chơi</span></a></div><div class="menus_item"><a class="site-page" href="/boardgames"><i class="fa-fw fa-solid fa-dice"></i><span> Boardgame</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Bài viết</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Thành tựu</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Thể loại</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> Giới thiệu</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Xử lý va chạm trong Unity</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-12-18T15:18:33.000Z" title="Created 2022-12-18 22:18:33">2022-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-12-27T13:13:18.631Z" title="Updated 2022-12-27 20:13:18">2022-12-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Programming/">Programming</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Programming/Unity/">Unity</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Xử lý va chạm trong Unity"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Loi-khai-mac"><a href="#Loi-khai-mac" class="headerlink" title="Lời khai mạc"></a>Lời khai mạc</h1><p>Chào mọi người mình là Laputa. Trong bài viết này mình sẽ chỉ ra khái niệm, cách hoạt động và đồng thời là một số lưu ý trong quá trình sử dụng vật lý của Unity cung cấp. Nào! Get Goooo!</p>
+<p>Mình sẽ gọi Vật Lý trong Unity là Physic Engine - cỗ máy xử lý các thông tin và sự kiện vật lý.</p>
+<h1 id="Vat-ly-trong-2D-va-3D"><a href="#Vat-ly-trong-2D-va-3D" class="headerlink" title="Vật lý trong 2D và 3D"></a>Vật lý trong 2D và 3D</h1><p>Vật lý 2D có hơi khác hơn so với vật lý 3D nhưng vẫn phải tuân thủ theo yêu cầu trên. Trong đó vậy lý 2D được tích hợp động cơ Box2D (Box2D engine), còn 3D là Nvidia PhysX. Điều này hiển nhiên sẽ gây ra sự khác nhau giữa cách tính toán vật lý cũng như là hiệu năng giữa 2 không gian.</p>
+<p>Tên các loại components vật lý trong Unity sẽ mặc định là chuẩn theo dạng 3D. Dễ hiểu vì môi trường xung quanh chúng ta được biểu diễn dưới dạng không gian 3 chiều.<br><img src="/img/post/unity-physics/1.png" alt="alt"><br>Ngược lại thì các component vật lý 2D sẽ được thêm chữ 2D để phân biệt rõ.<br><img src="/img/post/unity-physics/2.png" alt="alt"></p>
+<h1 id="Vat-ly-trong-unity-duoc-hoat-dong-nhu-the-nao"><a href="#Vat-ly-trong-unity-duoc-hoat-dong-nhu-the-nao" class="headerlink" title="Vật lý trong unity được hoạt động như thế nào?"></a>Vật lý trong unity được hoạt động như thế nào?</h1><p>Trong Unity Physic Engine được mô phỏng thông qua các collider để phản hồi các tính chất giống như đời thực như gia tốc, vận tốc hay các loại lực hỗn tạp khác. Ngoài ra Unity còn cung cấp sẵn Physic Engine khác nhau để bạn có thể thỏa mái sử dụng trong project của mình theo dạng 2D, 3D, hướng đối tượng hay là hướng dữ liệu.</p>
+<p>Thông thường, khi cài đặt hay sử dụng Unity thì người dùng thường để chế độ vật lý mặc định dùng cho hướng đối tượng - Built-in physics engines. Ngoài ra còn một số loại thiết lập vật lý khác dành cho hướng dữ liệu, ở đây mình chỉ đề cập về Physic Engine mặc định của Unity. Cụ thể để sử dụng vật lý trong unity phải có 2 yêu cầu:<br>[Thứ 1] 2 vật tương tác với nhau đều phải có collider để xác định vùng va chạm.<br>[Thứ 2] 1 trong 2 vật thể đó phải có gắn rigidbody.<br>Để ví dụ minh họa. Mình có 2 cục cube, mình sẽ để cục cube phía trên có gắn collider và rigidbody, cục phía dưới sẽ chỉ có collider. Và đây là kết quả:<br><img src="/img/post/unity-physics/4.gif" alt="alt"></p>
+<p>Có 2 loại collider là non-trigger collision và trigger collision. Non-trigger collision là một thể tương tác có tác động vật lý của component collider còn trigger collision là một thể tương tác xuyên qua. Để dễ hình dung ta đi vào ví dụ sau đây:<br>Mình có 2 cục cube giống nhau đều có collider và rigidbody, 2 cục mình đều để là non-trigger collider thì 2 vật húc nhau và có lực đẩy nhau:<br><img src="/img/post/unity-physics/5.gif" alt="alt"><br>Mình có 2 cục cube giống nhau đều có collider và rigidbody, 1 cục mình đều để là trigger collider và cục còn lại để non-trigger collider thì 2 vật đi qua nhau:<br><img src="/img/post/unity-physics/6.gif" alt="alt"></p>
+<p>Khi có một sự kiện va chạm, Physic Engine sẽ gọi tất cả các hàm va chạm <code>OnCollision</code> bên trong các scripts Monobehaviour nếu gameobject đó có gắn nontrigger collider; Còn ngược lại nếu vật thể gắn được gắn trigger collider thì script sẽ bắt sự kiện thông qua hàm <code>OnTrigger</code><br>Có 3 hàm bắt sự kiện của vật trong <code>OnCollision</code> (cho non-trigger collider):</p>
+<ul>
+<li><code>OnCollisionEnter</code>: được gọi mỗi khi 2 vật bắt đầu va chạm (1 frame đầu)</li>
+<li><code>OnCollisionStay</code>: được gọi mỗi khi 2 vật vẫn trong thời gian va chạm (nhiều frame)</li>
+<li><code>OnCollisionExit</code>: được gọi mỗi khi 2 vật rời khỏi nhau (1 frame cuối)<br><img src="/img/post/unity-physics/7.png" alt="alt"><p style="text-align: center;"><b>Non-trigger collider</b></p></li>
+</ul>
+<p>Tương tự với <code>OnTrigger</code> (cho trigger collider)</p>
+<ul>
+<li><code>OnTriggerEnter</code>: được gọi mỗi khi 2 vật bắt đầu va chạm (1 frame đầu)</li>
+<li><code>OnTriggerStay</code>: được gọi mỗi khi 2 vật vẫn trong thời gian va chạm (nhiều frame)</li>
+<li><code>OnTriggerExit</code>: được gọi mỗi khi 2 vật rời khỏi nhau (1 frame cuối)</li>
+</ul>
+<p><img src="/img/post/unity-physics/8.png" alt="alt"></p>
+<p style="text-align: center;"><b>Trigger collider</b></p>
+Ở 2D cũng không khác, bạn chỉ cần thêm từ khóa 2D trong mỗi tên hàm nhận sự kiện va chạm
+
+<p><img src="/img/post/unity-physics/9.png" alt="alt"></p>
+<p style="text-align: center;"><b>Hàm sự kiện va chạm 3D</b></p>
+
+<p><img src="/img/post/unity-physics/10.png" alt="alt"></p>
+<p style="text-align: center;"><b>Hàm sự kiện va chạm 2D</b></p>
+
+<h1 id="Lap-trinh"><a href="#Lap-trinh" class="headerlink" title="Lập trình"></a>Lập trình</h1><p>Lý thuyết đã đủ. Giờ hãy đi vào thực hành nào.<br>Đầu tiên mình sẽ setup trước 2 cục cube có gắn collider và script example. Mình sẽ thực hiện đổi màu cho khi 2 cục va chạm vào nhau.</p>
+<p><img src="/img/post/unity-physics/11.png" alt="alt"></p>
+<p style="text-align: center;"><b>Inspector của Cube (1)</b></p>
+
+<p><img src="/img/post/unity-physics/12.png" alt="alt"></p>
+<p style="text-align: center;"><b>Inspector của Cube (2)</b></p>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">using</span> Unity.Collections;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Example</span> : <span class="title">ActionObject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Speed;</span><br><span class="line">    <span class="keyword">public</span> Material Material;</span><br><span class="line">    [<span class="meta">ReadOnly</span>] <span class="keyword">public</span> <span class="built_in">bool</span> IsChangeColor;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MeshRenderer _meshRenderer;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        _meshRenderer = GetComponent&lt;MeshRenderer&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!IsAction) <span class="keyword">return</span>;</span><br><span class="line">        transform.position += Vector3.right * Speed * Time.deltaTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnCollisionEnter</span>(<span class="params">Collision other</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (other.gameObject.CompareTag(<span class="string">&quot;Cube&quot;</span>) &amp;&amp; !IsChangeColor)</span><br><span class="line">        &#123;</span><br><span class="line">            _meshRenderer.material = Material;</span><br><span class="line">            IsChangeColor = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&gt; Và đây là kết quả</p>
+<p><img src="/img/post/unity-physics/13.gif" alt="alt"></p>
+<p style="text-align: center;"><b>2 vật chạm nhau</b></p>
+
+<h1 id="Loi-chan-choi"><a href="#Loi-chan-choi" class="headerlink" title="Lời chăn chối"></a>Lời chăn chối</h1><p>Đây là bài viết cơ bản về va chạm của Unity. Ngoài ra còn rất nhiều các kiến thức nữa nhưng mình chưa đề cập tới. Cám ơn các bạn đã đọc.</p>
+<p>Để biết rõ hơn API mà Unity cung cấp các bạn có thể vào link sau:<br><a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/collision-section.html">https://docs.unity3d.com/Manual/collision-section.html</a><br><a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/Physics2DReference.html">https://docs.unity3d.com/Manual/Physics2DReference.html</a></p>
+<p>Link tham khảo:</p>
+<p style="text-align: right;"><b>Bài viết được viết bởi Laputa</b></p></article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Programming/">Programming</a><a class="post-meta__tags" href="/tags/Guide/">Guide</a><a class="post-meta__tags" href="/tags/Unity/">Unity</a></div><div class="post_share"><div class="social-share" data-image="/img/post-cover/unity-physics.jpg" data-sites="facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/11/20/top-10-old-games/"><img class="next-cover" src="/img/post-cover/top-10-old-games.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Top 10 tựa game huyền thoại</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/10/06/unity-introduction/" title="Lập trình game cơ bản với Unity Engine Phần 1."><img class="cover" src="/img/post-cover/unity-introduction.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-06</div><div class="title">Lập trình game cơ bản với Unity Engine Phần 1.</div></div></a></div><div><a href="/2022/10/27/unity-monobehaviour/" title="Sự kiện và các tuyệt kỹ của Mono-behaviour."><img class="cover" src="/img/post-cover/unity-monobehaviour.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-27</div><div class="title">Sự kiện và các tuyệt kỹ của Mono-behaviour.</div></div></a></div><div><a href="/2022/10/26/unity-transform/" title="Bí kíp thất truyền về Transform trong Unity."><img class="cover" src="/img/post-cover/unity-transform.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-26</div><div class="title">Bí kíp thất truyền về Transform trong Unity.</div></div></a></div><div><a href="/2022/09/29/git-world/" title="Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào."><img class="cover" src="/img/post-cover/git-world.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Git và github là gì? Git đã cứu rỗi cuộc đời của developer như thế nào.</div></div></a></div><div><a href="/2022/09/26/how-to-make-a-game/" title="Làm thế nào để làm game? Lập trình game cần những gì?"><img class="cover" src="/img/post-cover/how-to-make-a-game.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-26</div><div class="title">Làm thế nào để làm game? Lập trình game cần những gì?</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Laputa</div><div class="author-info__description">Kiến thức cần được chia sẻ!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/GuardianOfGods"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.instagram.com/hv_thu/" target="_blank" title=""><i class="fab fa-instagram"></i></a><a class="social-icon" href="https://twitter.com/ThanhTn80582218" target="_blank" title=""><i class="fab fa-twitter"></i></a><a class="social-icon" href="mailto:laputa.blog99@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Bản cập nhật blog v1.0 đã cập bến. Sẽ có ít nhất 2 bài viết/ tuần, mọi người hãy đón chờ nhé <3.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Loi-khai-mac"><span class="toc-number">1.</span> <span class="toc-text">Lời khai mạc</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Vat-ly-trong-2D-va-3D"><span class="toc-number">2.</span> <span class="toc-text">Vật lý trong 2D và 3D</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Vat-ly-trong-unity-duoc-hoat-dong-nhu-the-nao"><span class="toc-number">3.</span> <span class="toc-text">Vật lý trong unity được hoạt động như thế nào?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lap-trinh"><span class="toc-number">4.</span> <span class="toc-text">Lập trình</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Loi-chan-choi"><span class="toc-number">5.</span> <span class="toc-text">Lời chăn chối</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/18/unity-physics/" title="Xử lý va chạm trong Unity"><img src="/img/post-cover/unity-physics.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Xử lý va chạm trong Unity"/></a><div class="content"><a class="title" href="/2022/12/18/unity-physics/" title="Xử lý va chạm trong Unity">Xử lý va chạm trong Unity</a><time datetime="2022-12-18T15:18:33.000Z" title="Created 2022-12-18 22:18:33">2022-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/20/top-10-old-games/" title="Top 10 tựa game huyền thoại"><img src="/img/post-cover/top-10-old-games.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Top 10 tựa game huyền thoại"/></a><div class="content"><a class="title" href="/2022/11/20/top-10-old-games/" title="Top 10 tựa game huyền thoại">Top 10 tựa game huyền thoại</a><time datetime="2022-11-20T12:40:49.000Z" title="Created 2022-11-20 19:40:49">2022-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/17/hyper-casual-games/" title="Casual game là gì? Sự bùng nổ của thế giới game casual."><img src="/img/post-cover/hyper-casual-games.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Casual game là gì? Sự bùng nổ của thế giới game casual."/></a><div class="content"><a class="title" href="/2022/11/17/hyper-casual-games/" title="Casual game là gì? Sự bùng nổ của thế giới game casual.">Casual game là gì? Sự bùng nổ của thế giới game casual.</a><time datetime="2022-11-17T15:00:02.000Z" title="Created 2022-11-17 22:00:02">2022-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/27/unity-monobehaviour/" title="Sự kiện và các tuyệt kỹ của Mono-behaviour."><img src="/img/post-cover/unity-monobehaviour.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sự kiện và các tuyệt kỹ của Mono-behaviour."/></a><div class="content"><a class="title" href="/2022/10/27/unity-monobehaviour/" title="Sự kiện và các tuyệt kỹ của Mono-behaviour.">Sự kiện và các tuyệt kỹ của Mono-behaviour.</a><time datetime="2022-10-27T14:51:51.000Z" title="Created 2022-10-27 21:51:51">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/26/unity-transform/" title="Bí kíp thất truyền về Transform trong Unity."><img src="/img/post-cover/unity-transform.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bí kíp thất truyền về Transform trong Unity."/></a><div class="content"><a class="title" href="/2022/10/26/unity-transform/" title="Bí kíp thất truyền về Transform trong Unity.">Bí kíp thất truyền về Transform trong Unity.</a><time datetime="2022-10-26T14:48:13.000Z" title="Created 2022-10-26 21:48:13">2022-10-26</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/post-cover/unity-physics.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 By Laputa</div><p> ỦNG HỘ MÌNH QUA</p>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-momo" target="_blank" href="https://me.momo.vn/gMIMugTbCafaTquWuluW"><img src="/img/donate/momo.png" alt="Momo"><span style="margin-left:5px">Momo</span></a>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-coffee" target="_blank" href="https://www.buymeacoffee.com/HoangVanThu"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button-paypal" target="_blank" href="https://paypal.me/guardianofgods?country.x=VN&locale.x=vi_VN"><img src="/img/donate/paypal.png" alt="Paypal"><span style="margin-left:5px">Paypal</span></a><div class="footer_custom_text">Lấy đao chém xuống nước, nước càng chảy. Nâng chén tiêu sầu, sầu càng sâu.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guardianofgods.github.io/2022/12/18/unity-physics/'
+    this.page.identifier = '/2022/12/18/unity-physics/'
+    this.page.title = 'Xử lý va chạm trong Unity'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-www-laputa-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Disqus' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><canvas id="universe"></canvas><script src="/js/universal.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="true"></script><script src="//code.tidio.co/uw0qc4uh6a9jnenr5kvddtnwffyorimq.js" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/unitychan.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":60,"vOffset":-40},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body></html>
