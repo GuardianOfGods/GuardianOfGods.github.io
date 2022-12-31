@@ -4271,6 +4271,7 @@ h1.page-title + .tag-cloud-list {
   transition: filter 375ms ease-in 0.2s;
 }
 #article-container p {
+  font-size: 18px;
   margin: 0 0 16px;
 }
 #article-container iframe {
@@ -4415,6 +4416,7 @@ h1.page-title + .tag-cloud-list {
   color: var(--pseudo-hover);
 }
 #article-container.post-content ul > li {
+  font-size: 16px;
   list-style-type: circle;
 }
 #article-container > :last-child {
